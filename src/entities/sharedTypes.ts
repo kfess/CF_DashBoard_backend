@@ -10,7 +10,7 @@ export type Classification =
   | "Educational"
   | "Others";
 
-export type Type = "CF" | "IOI" | "ICPC" | "Other";
+export type ContestType = "CF" | "IOI" | "ICPC" | "Other";
 
 export type Phase =
   | "BEFORE"
@@ -26,3 +26,43 @@ export type Kind =
   | "Training Camp Contest"
   | "Official International Personal Contest"
   | "Training Contest";
+
+export type ProblemType = "PROGRAMMING" | "QUESTION";
+
+export type Tag =
+  | "implementation"
+  | "math"
+  | "greedy"
+  | "dp"
+  | "data structures"
+  | "brute force"
+  | "constructive algorithms"
+  | "graphs"
+  | "sortings"
+  | "binary search"
+  | "dfs and similar"
+  | "trees"
+  | "strings"
+  | "number theory"
+  | "combinatorics"
+  | "*special"
+  | "geometry"
+  | "bitmasks"
+  | "two pointers"
+  | "dsu"
+  | "shortest paths"
+  | "probabilities"
+  | "divide and conquer"
+  | "hashing"
+  | "games"
+  | "flows"
+  | "interactive"
+  | "matrices"
+  | "fft"
+  | "ternary search"
+  | "expression parsing"
+  | "meet-in-the-middle"
+  | "2-sat"
+  | "chinese remainder theorem"
+  | "schedules"
+  | "no tags";
