@@ -1,6 +1,7 @@
+import "module-alias/register";
 import { ApolloServer } from "apollo-server";
-import { typeDefs } from "./schema";
-import { resolvers } from "./resolvers";
+import { typeDefs } from "@/schema";
+import { resolvers } from "@/resolvers";
 
 const server = new ApolloServer({
   typeDefs,
