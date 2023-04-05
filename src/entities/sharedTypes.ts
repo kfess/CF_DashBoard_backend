@@ -66,3 +66,5 @@ export type Tag =
   | "chinese remainder theorem"
   | "schedules"
   | "no tags";
+
+export type Mode = "Normal" | "Lockout" | "Training";
