@@ -2,13 +2,13 @@ export class User {
   id: string;
   githubId: string;
   githubUsername: string;
-  codeforcesUsername: string;
+  codeforcesUsername?: string;
 
   constructor(
     id: string,
     githubId: string,
     githubUsername: string,
-    codeforcesUsername: string
+    codeforcesUsername?: string
   ) {
     this.id = id;
     this.githubId = githubId;

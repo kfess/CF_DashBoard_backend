@@ -2,7 +2,7 @@ import { Mode } from "@/entities/sharedTypes";
 import { Problem } from "@/entities/Problem";
 
 export class CustomContest {
-  public contestId: number;
+  public contestId: string; // UUID
   public title: string;
   public description: string;
   public owner: string;
@@ -18,7 +18,7 @@ export class CustomContest {
   public updatedAt: Date;
 
   constructor(
-    contestId: number,
+    contestId: string, // UUID
     title: string,
     description: string,
     owner: string,
