@@ -61,7 +61,7 @@ model CustomContest {
 }
 
 model Problem {
-  problemId             Int             @id
+  problemId             Int             @id @default(autoincrement())
   contestId             Int
   index                 String
   name                  String
@@ -76,6 +76,7 @@ model Problem {
   contest               Contest?        @relation(fields: [contestId], references: [contestId])
   customContests        CustomContestProblem[]
   problemLabels         ProblemLabel[]
+  @@unique([contestId, index], name: "contestId_index")
 }
 
 

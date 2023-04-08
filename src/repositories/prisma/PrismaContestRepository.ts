@@ -25,14 +25,43 @@ export class PrismaContestRepository implements ContestRepository {
   async findById(id: number): Promise<Contest | null> {
     const contest = await this.prisma.contest.findUnique({
       where: { contestId: id },
+      include: { problems: true },
     });
-    const problems = await this.prisma.problem.findMany({
-      where: { contestId: id },
+    return contest
+      ? this.toEntity(contest, contest.problems.map(this.toProblemEntity))
+      : null;
+  }
+
+  async findAll(): Promise<Contest[]> {
+    const contests = await this.prisma.contest.findMany({
+      include: { problems: true },
     });
+    return contests.map((contest) =>
+      this.toEntity(contest, contest.problems.map(this.toProblemEntity))
+    );
+  }
 
-    const problemEntities = problems.map(this.toProblemEntity);
+  async create(contest: Contest): Promise<Contest> {
+    const createdContest = await this.prisma.contest.create({
+      data: this.fromEntity(contest),
+      include: { problems: true },
+    });
+    return this.toEntity(
+      createdContest,
+      createdContest.problems.map(this.toProblemEntity)
+    );
+  }
 
-    return contest ? this.toEntity(contest, problemEntities) : null;
+  async update(contest: Contest): Promise<Contest> {
+    const updatedContest = await this.prisma.contest.update({
+      where: { contestId: contest.contestId },
+      data: this.fromEntity(contest),
+      include: { problems: true },
+    });
+    return this.toEntity(
+      updatedContest,
+      updatedContest.problems.map(this.toProblemEntity)
+    );
   }
 
   private toProblemEntity(problem: PrismaProblem): Problem {
@@ -86,5 +115,28 @@ export class PrismaContestRepository implements ContestRepository {
       description,
       difficulty,
     });
+  }
+
+  private fromEntity(contest: Contest): PrismaContest {
+    return {
+      contestId: contest.contestId,
+      contestName: contest.contestName,
+      type: contest.type,
+      startTimeSeconds: contest.startTimeSeconds,
+      durationSeconds: contest.durationSeconds,
+      relativeTimeSeconds: contest.relativeTimeSeconds,
+      phase: contest.phase,
+      frozen: contest.frozen,
+      kind: contest.kind,
+      classification: contest.classification,
+      icpcRegion: contest.icpcRegion ?? null,
+      country: contest.country ?? null,
+      city: contest.city ?? null,
+      season: contest.season ?? null,
+      preparedBy: contest.preparedBy ?? null,
+      websiteUrl: contest.websiteUrl ?? null,
+      description: contest.description ?? null,
+      difficulty: contest.difficulty ?? null,
+    };
   }
 }

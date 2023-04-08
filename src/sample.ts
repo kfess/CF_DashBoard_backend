@@ -1,0 +1,37 @@
+import { PrismaClient } from "@prisma/client";
+import { Contest } from "./entities/Contest";
+import { PrismaContestRepository } from "./repositories/prisma/PrismaContestRepository";
+
+async function main() {
+  const prisma = new PrismaClient();
+  const contestRepository = new PrismaContestRepository(prisma);
+
+  const contest = new Contest({
+    contestId: 1,
+    contestName: "test",
+    type: "CF",
+    phase: "BEFORE",
+    frozen: true,
+    durationSeconds: 1,
+    startTimeSeconds: 1,
+    relativeTimeSeconds: 1,
+    kind: "Official ICPC Contest",
+    problems: [],
+    classification: "Div. 1",
+  });
+
+  await contestRepository.create(contest);
+
+  const fetchedContest = await contestRepository.findById(1);
+  console.log(fetchedContest);
+
+  const allContests = await contestRepository.findAll();
+  console.log(allContests);
+
+  await prisma.$disconnect();
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
