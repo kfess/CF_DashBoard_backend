@@ -10,7 +10,13 @@ export class PrismaProblemRepository implements ProblemInterface {
     this.prisma = prisma;
   }
 
-  // async findById(): Promise<Problem | null> {}
+  async findById(contestId: number, index: string): Promise<Problem | null> {
+    const problem = await this.prisma.problem.findUnique({
+      where: { contestId_index: { contestId: contestId, index: index } },
+    });
+
+    return problem ? this.toEntity(problem) : null;
+  }
 
   async findAll(): Promise<Problem[]> {
     const problems = await this.prisma.problem.findMany();

@@ -1,4 +1,5 @@
 import {
+  Prisma,
   PrismaClient,
   Contest as PrismaContest,
   Problem as PrismaProblem,
@@ -117,7 +118,22 @@ export class PrismaContestRepository implements ContestRepository {
     });
   }
 
-  private fromEntity(contest: Contest): PrismaContest {
+  private fromEntity(contest: Contest): Prisma.ContestCreateInput {
+    const problems: Prisma.ProblemCreateNestedManyWithoutContestInput = {
+      create: contest.problems.map((problem) => ({
+        index: problem.index,
+        name: problem.name,
+        type: problem.type,
+        tags: problem.tags,
+        contestName: problem.contestName,
+        classification: problem.classification,
+        problemsetName: problem.problemsetName,
+        points: problem.points,
+        rating: problem.rating,
+        solvedCount: problem.solvedCount,
+      })),
+    };
+
     return {
       contestId: contest.contestId,
       contestName: contest.contestName,
@@ -137,6 +153,7 @@ export class PrismaContestRepository implements ContestRepository {
       websiteUrl: contest.websiteUrl ?? null,
       description: contest.description ?? null,
       difficulty: contest.difficulty ?? null,
+      problems: problems,
     };
   }
 }

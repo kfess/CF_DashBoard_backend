@@ -7,7 +7,7 @@ async function main() {
   const contestRepository = new PrismaContestRepository(prisma);
 
   const contest = new Contest({
-    contestId: 1,
+    contestId: 2,
     contestName: "test",
     type: "CF",
     phase: "BEFORE",
@@ -16,15 +16,27 @@ async function main() {
     startTimeSeconds: 1,
     relativeTimeSeconds: 1,
     kind: "Official ICPC Contest",
-    problems: [],
     classification: "Div. 1",
+    problems: [
+      {
+        contestId: 2,
+        contestName: "test",
+        index: "A",
+        name: "test",
+        type: "PROGRAMMING",
+        tags: ["2-sat"],
+        problemsetName: "test",
+        points: 1000,
+        rating: 1000,
+        solvedCount: 1000,
+        classification: "Div. 1",
+      },
+    ],
   });
 
   await contestRepository.create(contest);
 
   const fetchedContest = await contestRepository.findById(1);
-  console.log(fetchedContest);
-
   const allContests = await contestRepository.findAll();
   console.log(allContests);
 
