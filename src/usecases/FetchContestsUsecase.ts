@@ -1,5 +1,5 @@
 import { Contest } from "@/entities/Contest";
 
 export interface FetchContestUsecase {
-  run(): Promise<Contest[]>;
+  run(): Promise<void>;
 }

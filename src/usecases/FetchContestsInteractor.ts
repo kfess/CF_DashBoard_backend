@@ -22,7 +22,7 @@ export class FetchContestsInteractor implements FetchContestUsecase {
     this.contestRepository = contestRepository;
   }
 
-  async run(): Promise<Contest[]> {
+  async run(): Promise<void> {
     const officialContests = await this.fetchContestsFromCodeforcesAPI();
     const [officialProblems, officialStatisticsProblems] =
       await this.fetchProblemsFromCodeforcesAPI();
@@ -31,6 +31,23 @@ export class FetchContestsInteractor implements FetchContestUsecase {
       officialProblems,
       officialStatisticsProblems
     );
+
+    for (const contest of mergedContests) {
+      try {
+        const existingContest = await this.contestRepository.findById(
+          contest.id
+        );
+        if (!existingContest) {
+          await this.contestRepository.create(contest);
+        } else {
+          await this.contestRepository.update(contest);
+        }
+      } catch (error) {
+        console.error(
+          `Failed to save contest with ID: ${contest.id}. Error: ${error}`
+        );
+      }
+    }
   }
 
   private async fetchContestsFromCodeforcesAPI(): Promise<OfficialContest[]> {
@@ -119,7 +136,6 @@ export class FetchContestsInteractor implements FetchContestUsecase {
     problems.forEach((problem) => {
       const contestId = problem.contestId;
       const problems = problemMap.get(contestId) || [];
-      problems.push(problem);
       problemMap.set(contestId, problems);
     });
 

@@ -31,9 +31,9 @@ model Contest {
   country               String?
   city                  String?
   season                String?
-  preparedBy            Int?
-  websiteUrl            Int?
-  description           Int?
+  preparedBy            String?
+  websiteUrl            String?
+  description           String?
   difficulty            Int?
   problems              Problem[]
   contestLabels         ContestLabel[]

@@ -10,8 +10,8 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Contest" (
-    "contestId" INTEGER NOT NULL,
-    "contestName" TEXT NOT NULL,
+    "id" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "phase" TEXT NOT NULL,
     "frozen" BOOLEAN NOT NULL,
@@ -19,17 +19,17 @@ CREATE TABLE "Contest" (
     "startTimeSeconds" INTEGER NOT NULL,
     "relativeTimeSeconds" INTEGER NOT NULL,
     "kind" TEXT NOT NULL,
-    "icpcRegion" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "season" TEXT NOT NULL,
     "classification" TEXT NOT NULL,
+    "icpcRegion" TEXT,
+    "country" TEXT,
+    "city" TEXT,
+    "season" TEXT,
     "preparedBy" INTEGER,
     "websiteUrl" INTEGER,
     "description" INTEGER,
     "difficulty" INTEGER,
 
-    CONSTRAINT "Contest_pkey" PRIMARY KEY ("contestId")
+    CONSTRAINT "Contest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -53,21 +53,25 @@ CREATE TABLE "CustomContest" (
 
 -- CreateTable
 CREATE TABLE "Problem" (
-    "problemId" INTEGER NOT NULL,
-    "name" TEXT NOT NULL,
     "contestId" INTEGER NOT NULL,
     "index" TEXT NOT NULL,
-    "rating" INTEGER,
+    "name" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
     "tags" TEXT[],
-
-    CONSTRAINT "Problem_pkey" PRIMARY KEY ("problemId")
+    "contestName" TEXT NOT NULL,
+    "classification" TEXT NOT NULL,
+    "problemsetName" TEXT,
+    "points" INTEGER,
+    "rating" INTEGER,
+    "solvedCount" INTEGER
 );
 
 -- CreateTable
 CREATE TABLE "CustomContestProblem" (
     "id" INTEGER NOT NULL,
     "customContestId" TEXT NOT NULL,
-    "problemId" INTEGER NOT NULL,
+    "problemContestId" INTEGER NOT NULL,
+    "problemIndex" TEXT NOT NULL,
 
     CONSTRAINT "CustomContestProblem_pkey" PRIMARY KEY ("id")
 );
@@ -88,7 +92,8 @@ CREATE TABLE "Label" (
 -- CreateTable
 CREATE TABLE "ProblemLabel" (
     "id" INTEGER NOT NULL,
-    "problemId" INTEGER NOT NULL,
+    "problemContestId" INTEGER NOT NULL,
+    "problemIndex" TEXT NOT NULL,
     "labelId" INTEGER NOT NULL,
 
     CONSTRAINT "ProblemLabel_pkey" PRIMARY KEY ("id")
@@ -107,34 +112,37 @@ CREATE TABLE "ContestLabel" (
 CREATE UNIQUE INDEX "User_githubId_key" ON "User"("githubId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Contest_contestId_key" ON "Contest"("contestId");
+CREATE UNIQUE INDEX "Contest_id_key" ON "Contest"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Problem_contestId_index_key" ON "Problem"("contestId", "index");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CustomContestProblem_id_key" ON "CustomContestProblem"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "CustomContestProblem_customContestId_problemId_key" ON "CustomContestProblem"("customContestId", "problemId");
+CREATE UNIQUE INDEX "CustomContestProblem_customContestId_problemContestId_probl_key" ON "CustomContestProblem"("customContestId", "problemContestId", "problemIndex");
 
 -- AddForeignKey
-ALTER TABLE "Problem" ADD CONSTRAINT "Problem_contestId_fkey" FOREIGN KEY ("contestId") REFERENCES "Contest"("contestId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Problem" ADD CONSTRAINT "Problem_contestId_fkey" FOREIGN KEY ("contestId") REFERENCES "Contest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CustomContestProblem" ADD CONSTRAINT "CustomContestProblem_customContestId_fkey" FOREIGN KEY ("customContestId") REFERENCES "CustomContest"("contestId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CustomContestProblem" ADD CONSTRAINT "CustomContestProblem_problemId_fkey" FOREIGN KEY ("problemId") REFERENCES "Problem"("problemId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "CustomContestProblem" ADD CONSTRAINT "CustomContestProblem_problemContestId_problemIndex_fkey" FOREIGN KEY ("problemContestId", "problemIndex") REFERENCES "Problem"("contestId", "index") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Label" ADD CONSTRAINT "Label_githubId_fkey" FOREIGN KEY ("githubId") REFERENCES "User"("githubId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ProblemLabel" ADD CONSTRAINT "ProblemLabel_problemId_fkey" FOREIGN KEY ("problemId") REFERENCES "Problem"("problemId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProblemLabel" ADD CONSTRAINT "ProblemLabel_problemContestId_problemIndex_fkey" FOREIGN KEY ("problemContestId", "problemIndex") REFERENCES "Problem"("contestId", "index") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ProblemLabel" ADD CONSTRAINT "ProblemLabel_labelId_fkey" FOREIGN KEY ("labelId") REFERENCES "Label"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ContestLabel" ADD CONSTRAINT "ContestLabel_contestId_fkey" FOREIGN KEY ("contestId") REFERENCES "Contest"("contestId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ContestLabel" ADD CONSTRAINT "ContestLabel_contestId_fkey" FOREIGN KEY ("contestId") REFERENCES "Contest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ContestLabel" ADD CONSTRAINT "ContestLabel_labelId_fkey" FOREIGN KEY ("labelId") REFERENCES "Label"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
