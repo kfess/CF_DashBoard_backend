@@ -81,7 +81,7 @@ export class PrismaProblemRepository implements ProblemInterface {
     if (!isUpdate) {
       problemData.contest = {
         connect: {
-          contestId: problem.contestId,
+          id: problem.contestId,
         },
       };
     }
