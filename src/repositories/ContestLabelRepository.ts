@@ -1,12 +1,11 @@
 import { Label } from "@/entities/Label";
 
 export interface ContestLabelRepository {
-  findById(id: number): Promise<Label | null>;
-  findAll(): Promise<Label[]>;
-  findByOwnerId(ownerId: string): Promise<Label[]>;
+  findByUserId(userId: string): Promise<Label[]>;
+  findByIdAndGithubId(id: number, userId: string): Promise<Label | null>;
   create(label: Label): Promise<Label>;
   update(label: Label): Promise<Label>;
-  delete(id: number): Promise<void>;
+  delete(id: number, userId: string): Promise<void>;
   addContestToLabel(contestId: number, labelId: number): Promise<void>;
   removeContestFromLabel(contestId: number, labelId: number): Promise<void>;
 }

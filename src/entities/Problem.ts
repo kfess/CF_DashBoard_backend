@@ -13,19 +13,31 @@ export class Problem {
   readonly rating?: number;
   readonly solvedCount?: number;
 
-  constructor(
-    contestId: number,
-    index: string,
-    name: string,
-    type: ProblemType,
-    tags: Tag[],
-    contestName: string,
-    classification: Classification,
-    problemsetName?: string,
-    points?: number,
-    rating?: number,
-    solvedCount?: number
-  ) {
+  constructor({
+    contestId,
+    index,
+    name,
+    type,
+    tags,
+    contestName,
+    classification,
+    problemsetName,
+    points,
+    rating,
+    solvedCount,
+  }: {
+    contestId: number;
+    index: string;
+    name: string;
+    type: ProblemType;
+    tags: Tag[];
+    contestName: string;
+    classification: Classification;
+    problemsetName?: string;
+    points?: number;
+    rating?: number;
+    solvedCount?: number;
+  }) {
     this.contestId = contestId;
     this.contestName = contestName;
     this.index = index;

@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id                 String @id @default(uuid())
+  githubId           String @unique
+  githubUsername     String
+  codeforcesUsername String?
+  labels             Label[]
+}
+
+
+model Contest {
+  contestId             Int @id @unique
+  contestName           String
+  type                  String
+  phase                 String
+  frozen                Boolean
+  durationSeconds       Int
+  startTimeSeconds      Int
+  relativeTimeSeconds   Int
+  kind                  String
+  classification        String
+  icpcRegion            String?
+  country               String?
+  city                  String?
+  season                String?
+  preparedBy            Int?
+  websiteUrl            Int?
+  description           Int?
+  difficulty            Int?
+  problems              Problem[]
+  contestLabels         ContestLabel[]
+}
+
+model CustomContest {
+  contestId             String          @id
+  title                 String
+  description           String
+  owner                 String
+  ownerId               String
+  startTime             DateTime
+  endTime               DateTime
+  penalty               Int
+  mode                  String
+  visibility            Boolean
+  participants          String[]
+  createdAt             DateTime
+  updatedAt             DateTime
+  problems              CustomContestProblem[]
+}
+
+model Problem {
+  problemId             Int             @id
+  contestId             Int
+  index                 String
+  name                  String
+  type                  String
+  tags                  String[]
+  contestName           String
+  classification        String
+  problemsetName        String?
+  points                Int?
+  rating                Int?
+  solvedCount           Int?
+  contest               Contest?        @relation(fields: [contestId], references: [contestId])
+  customContests        CustomContestProblem[]
+  problemLabels         ProblemLabel[]
+}
+
+
+model CustomContestProblem {
+  id               Int            @id @unique
+  customContestId  String
+  problemId        Int
+  customContest    CustomContest  @relation(fields: [customContestId], references: [contestId])
+  problem          Problem        @relation(fields: [problemId], references: [problemId])
+
+  @@unique([customContestId, problemId])
+}
+
+model Label {
+  id                    Int             @id
+  githubId              String
+  name                  String
+  description           String
+  color                 String
+  createdAt             DateTime
+  updatedAt             DateTime
+  user                  User            @relation(fields: [githubId], references: [githubId])
+  problemLabels         ProblemLabel[]
+  contestLabels         ContestLabel[]
+}
+
+model ProblemLabel {
+  id                    Int             @id
+  problemId             Int
+  labelId               Int
+  problem               Problem         @relation(fields: [problemId], references: [problemId])
+  label                 Label           @relation(fields: [labelId], references: [id])
+}
+
+model ContestLabel {
+  id                    Int             @id
+  contestId             Int
+  labelId               Int
+  contest               Contest         @relation(fields: [contestId], references: [contestId])
+  label                 Label           @relation(fields: [labelId], references: [id])
+}

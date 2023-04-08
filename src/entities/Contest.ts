@@ -16,38 +16,58 @@ export class Contest {
   readonly startTimeSeconds: number;
   readonly relativeTimeSeconds: number;
   readonly kind: Kind;
-  readonly icpcRegion: string;
-  readonly country: string;
-  readonly city: string;
-  readonly season: string;
   readonly problems: Problem[];
   readonly classification: Classification;
+  readonly icpcRegion?: string;
+  readonly country?: string;
+  readonly city?: string;
+  readonly season?: string;
   readonly preparedBy?: number;
   readonly websiteUrl?: number;
   readonly description?: number;
   readonly difficulty?: number;
 
-  constructor(
-    contestId: number,
-    contestName: string,
-    type: ContestType,
-    phase: Phase,
-    frozen: boolean,
-    durationSeconds: number,
-    startTimeSeconds: number,
-    relativeTimeSeconds: number,
-    kind: Kind,
-    icpcRegion: string,
-    country: string,
-    city: string,
-    season: string,
-    problems: Problem[],
-    classification: Classification,
-    preparedBy?: number,
-    websiteUrl?: number,
-    description?: number,
-    difficulty?: number
-  ) {
+  constructor({
+    contestId,
+    contestName,
+    type,
+    phase,
+    frozen,
+    durationSeconds,
+    startTimeSeconds,
+    relativeTimeSeconds,
+    kind,
+    problems,
+    classification,
+    icpcRegion,
+    country,
+    city,
+    season,
+    preparedBy,
+    websiteUrl,
+    description,
+    difficulty,
+  }: {
+    contestId: number;
+    contestName: string;
+    type: ContestType;
+    phase: Phase;
+    frozen: boolean;
+    durationSeconds: number;
+    startTimeSeconds: number;
+    relativeTimeSeconds: number;
+    kind: Kind;
+    problems: Problem[];
+    classification: Classification;
+    icpcRegion?: string;
+    country?: string;
+    city?: string;
+    season?: string;
+    preparedBy?: number;
+    websiteUrl?: number;
+    description?: number;
+    difficulty?: number;
+  }) {
     this.contestId = contestId;
     this.contestName = contestName;
     this.type = type;
