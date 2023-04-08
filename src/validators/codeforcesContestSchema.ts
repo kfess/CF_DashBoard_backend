@@ -33,12 +33,14 @@ export const OfficialContestSchema = z.object({
       z.literal("Training Camp Contest"),
       z.literal("Official International Personal Contest"),
       z.literal("Training Contest"),
+      z.literal("Unknown"),
     ])
-    .optional(),
+    .optional()
+    .default("Unknown"),
   icpcRegion: z.string().optional(),
   country: z.string().optional(),
   city: z.string().optional(),
-  season: z.number().optional(),
+  season: z.string().optional(),
 });
 
 export type OfficialContest = z.infer<typeof OfficialContestSchema>;

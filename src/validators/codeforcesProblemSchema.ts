@@ -95,11 +95,17 @@ const OfficialProblemSchema = z.object({
     ),
 });
 
+export type OfficialProblem = z.infer<typeof OfficialProblemSchema>;
+
 const OfficialProblemStatisticsSchema = z.object({
   contestId: z.number(),
   index: z.string(),
   solvedCount: z.number(),
 });
+
+export type OfficialStatisticsProblem = z.infer<
+  typeof OfficialProblemStatisticsSchema
+>;
 
 export const ProblemApiResponseSchema = z.object({
   status: z.literal("OK"),

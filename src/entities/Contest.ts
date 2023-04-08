@@ -14,17 +14,17 @@ export class Contest {
   readonly frozen: boolean;
   readonly durationSeconds: number;
   readonly startTimeSeconds: number;
-  readonly relativeTimeSeconds: number;
   readonly kind: Kind;
   readonly problems: Problem[];
   readonly classification: Classification;
+  readonly relativeTimeSeconds?: number;
   readonly icpcRegion?: string;
   readonly country?: string;
   readonly city?: string;
   readonly season?: string;
-  readonly preparedBy?: number;
-  readonly websiteUrl?: number;
-  readonly description?: number;
+  readonly preparedBy?: string;
+  readonly websiteUrl?: string;
+  readonly description?: string;
   readonly difficulty?: number;
 
   constructor({
@@ -55,7 +55,7 @@ export class Contest {
     frozen: boolean;
     durationSeconds: number;
     startTimeSeconds: number;
-    relativeTimeSeconds: number;
+    relativeTimeSeconds?: number;
     kind: Kind;
     problems: Problem[];
     classification: Classification;
@@ -63,9 +63,9 @@ export class Contest {
     country?: string;
     city?: string;
     season?: string;
-    preparedBy?: number;
-    websiteUrl?: number;
-    description?: number;
+    preparedBy?: string;
+    websiteUrl?: string;
+    description?: string;
     difficulty?: number;
   }) {
     this.id = id;

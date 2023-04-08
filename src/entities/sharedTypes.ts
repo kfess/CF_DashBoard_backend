@@ -22,10 +22,12 @@ export type Phase =
 export type Kind =
   | "Official ICPC Contest"
   | "Official School Contest"
+  | "Opencup Contest"
   | "School/University/City/Region Championship"
   | "Training Camp Contest"
   | "Official International Personal Contest"
-  | "Training Contest";
+  | "Training Contest"
+  | "Unknown";
 
 export type ProblemType = "PROGRAMMING" | "QUESTION";
 
