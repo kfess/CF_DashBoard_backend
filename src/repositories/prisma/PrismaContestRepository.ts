@@ -91,6 +91,7 @@ export class PrismaContestRepository implements ContestRepository {
     const phase = contest.phase as Phase;
     const kind = contest.kind as Kind;
     const classification = contest.classification as Classification;
+    const relativeTimeSeconds = contest.relativeTimeSeconds ?? undefined;
     const icpcRegion = contest.icpcRegion ?? undefined;
     const country = contest.country ?? undefined;
     const city = contest.city ?? undefined;
@@ -107,6 +108,7 @@ export class PrismaContestRepository implements ContestRepository {
       phase,
       kind,
       classification,
+      relativeTimeSeconds,
       icpcRegion,
       country,
       city,

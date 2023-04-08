@@ -24,9 +24,9 @@ model Contest {
   frozen                Boolean
   durationSeconds       Int
   startTimeSeconds      Int
-  relativeTimeSeconds   Int
   kind                  String
   classification        String
+  relativeTimeSeconds   Int?
   icpcRegion            String?
   country               String?
   city                  String?
