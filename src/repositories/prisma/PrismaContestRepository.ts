@@ -25,7 +25,7 @@ export class PrismaContestRepository implements ContestRepository {
 
   async findById(id: number): Promise<Contest | null> {
     const contest = await this.prisma.contest.findUnique({
-      where: { contestId: id },
+      where: { id: id },
       include: { problems: true },
     });
     return contest
@@ -55,7 +55,7 @@ export class PrismaContestRepository implements ContestRepository {
 
   async update(contest: Contest): Promise<Contest> {
     const updatedContest = await this.prisma.contest.update({
-      where: { contestId: contest.contestId },
+      where: { id: contest.id },
       data: this.fromEntity(contest),
       include: { problems: true },
     });
@@ -135,8 +135,8 @@ export class PrismaContestRepository implements ContestRepository {
     };
 
     return {
-      contestId: contest.contestId,
-      contestName: contest.contestName,
+      id: contest.id,
+      name: contest.name,
       type: contest.type,
       startTimeSeconds: contest.startTimeSeconds,
       durationSeconds: contest.durationSeconds,

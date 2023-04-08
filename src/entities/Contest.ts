@@ -7,8 +7,8 @@ import {
 import { Problem } from "@/entities/Problem";
 
 export class Contest {
-  readonly contestId: number;
-  readonly contestName: string;
+  readonly id: number;
+  readonly name: string;
   readonly type: ContestType;
   readonly phase: Phase;
   readonly frozen: boolean;
@@ -28,8 +28,8 @@ export class Contest {
   readonly difficulty?: number;
 
   constructor({
-    contestId,
-    contestName,
+    id,
+    name,
     type,
     phase,
     frozen,
@@ -48,8 +48,8 @@ export class Contest {
     description,
     difficulty,
   }: {
-    contestId: number;
-    contestName: string;
+    id: number;
+    name: string;
     type: ContestType;
     phase: Phase;
     frozen: boolean;
@@ -68,8 +68,8 @@ export class Contest {
     description?: number;
     difficulty?: number;
   }) {
-    this.contestId = contestId;
-    this.contestName = contestName;
+    this.id = id;
+    this.name = name;
     this.type = type;
     this.phase = phase;
     this.frozen = frozen;

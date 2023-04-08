@@ -7,8 +7,8 @@ async function main() {
   const contestRepository = new PrismaContestRepository(prisma);
 
   const contest = new Contest({
-    contestId: 2,
-    contestName: "test",
+    id: 2,
+    name: "test",
     type: "CF",
     phase: "BEFORE",
     frozen: true,

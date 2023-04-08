@@ -17,8 +17,8 @@ model User {
 }
 
 model Contest {
-  contestId             Int @id @unique
-  contestName           String
+  id             Int @id @unique
+  name           String
   type                  String
   phase                 String
   frozen                Boolean
@@ -68,7 +68,7 @@ model Problem {
   points                Int?
   rating                Int?
   solvedCount           Int?
-  contest               Contest?        @relation(fields: [contestId], references: [contestId])
+  contest               Contest?        @relation(fields: [contestId], references: [id])
   customContests        CustomContestProblem[]
   problemLabels         ProblemLabel[]
   @@unique([contestId, index], name: "contestId_index")
@@ -110,6 +110,6 @@ model ContestLabel {
   id                    Int             @id
   contestId             Int
   labelId               Int
-  contest               Contest         @relation(fields: [contestId], references: [contestId])
+  contest               Contest         @relation(fields: [contestId], references: [id])
   label                 Label           @relation(fields: [labelId], references: [id])
 }

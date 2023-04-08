@@ -1,6 +1,6 @@
 export type Classification =
-  | "Div. 1"
   | "Div. 1 + Div. 2"
+  | "Div. 1"
   | "Div. 2"
   | "Div. 3"
   | "Div. 4"
