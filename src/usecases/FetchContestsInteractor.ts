@@ -42,6 +42,15 @@ export class FetchContestsInteractor implements FetchContestUsecase {
         } else {
           await this.contestRepository.update(contest);
         }
+        for (const problem of contest.problems) {
+          try {
+            await this.contestRepository.updateProblem(contest.id, problem);
+          } catch (error) {
+            console.error(
+              `Failed to upsert problem with index: ${problem.index} in contest with ID: ${contest.id}. Error: ${error}`
+            );
+          }
+        }
       } catch (error) {
         console.error(
           `Failed to save contest with ID: ${contest.id}. Error: ${error}`
@@ -135,8 +144,8 @@ export class FetchContestsInteractor implements FetchContestUsecase {
     const problemMap: Map<number, Problem[]> = new Map();
     problems.forEach((problem) => {
       const contestId = problem.contestId;
-      const problems = problemMap.get(contestId) || [];
-      problemMap.set(contestId, problems);
+      const contestProblems = problemMap.get(contestId) || [];
+      problemMap.set(contestId, [...contestProblems, problem]);
     });
 
     return officialContests.map((contest) => {

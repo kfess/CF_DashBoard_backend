@@ -56,13 +56,25 @@ export class PrismaContestRepository implements ContestRepository {
   async update(contest: Contest): Promise<Contest> {
     const updatedContest = await this.prisma.contest.update({
       where: { id: contest.id },
-      data: this.fromEntity(contest),
+      data: { ...this.fromEntity(contest), problems: undefined },
       include: { problems: true },
     });
     return this.toEntity(
       updatedContest,
       updatedContest.problems.map(this.toProblemEntity)
     );
+  }
+
+  async updateProblem(contestId: number, problem: Problem): Promise<Problem> {
+    const updatedProblem = await this.prisma.problem.upsert({
+      where: {
+        contestId_index: { contestId: contestId, index: problem.index },
+      },
+      update: problem,
+      create: { ...problem, contestId: contestId },
+    });
+
+    return this.toProblemEntity(updatedProblem);
   }
 
   private toProblemEntity(problem: PrismaProblem): Problem {
