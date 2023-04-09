@@ -22,7 +22,7 @@ export class FetchContestsInteractor implements FetchContestUsecase {
     this.contestRepository = contestRepository;
   }
 
-  async run(): Promise<void> {
+  async fetchAllAndUpdate(): Promise<void> {
     const officialContests = await this.fetchContestsFromCodeforcesAPI();
     const [officialProblems, officialStatisticsProblems] =
       await this.fetchProblemsFromCodeforcesAPI();

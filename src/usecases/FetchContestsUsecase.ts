@@ -1,3 +1,3 @@
 export interface FetchContestUsecase {
-  run(): Promise<void>;
+  fetchAllAndUpdate(): Promise<void>;
 }
