@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node dist/index.js"
+    "start": "tsc && ts-node -r tsconfig-paths/register dist/index.js"
   },
   "_moduleAliases": {
     "@": "./src"
