@@ -1,6 +1,6 @@
 import { gql } from "apollo-server";
-import { Contest } from "@/graphql/schema/Contest";
-import { Problem } from "@/graphql/schema/Problem";
+import { Contest } from "./Contest";
+import { Problem } from "./Problem";
 
 export const typeDefs = gql`
   ${Contest}

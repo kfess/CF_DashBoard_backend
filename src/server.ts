@@ -1,6 +1,5 @@
-import "module-alias/register";
 import { ApolloServer } from "apollo-server";
-import { typeDefs } from "./graphql/schema/index";
+import { typeDefs } from "./graphql/schema";
 import { resolvers } from "./graphql/resolvers";
 
 const server = new ApolloServer({

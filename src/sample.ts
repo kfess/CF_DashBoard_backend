@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { Contest } from "./entities/Contest";
 import { PrismaContestRepository } from "./repositories/prisma/PrismaContestRepository";
 import { FetchContestsInteractor } from "./usecases/FetchContestsInteractor";
 
@@ -9,7 +8,7 @@ async function main() {
   const fetchContestsInteractor = new FetchContestsInteractor(
     contestRepository
   );
-  await fetchContestsInteractor.run();
+  await fetchContestsInteractor.fetchAllAndUpdate();
 
   await prisma.$disconnect();
 }
