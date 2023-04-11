@@ -4,14 +4,14 @@
     "module": "commonjs",
     "outDir": "dist",
     "rootDir": "src",
-    // "baseUrl": "src",
-    // "paths": {
-    //   "@/*": ["./*"]
-    // },
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./*"]
     },
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@/*": ["src/*"]
+    // },
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

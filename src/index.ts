@@ -1,23 +1,11 @@
 import "module-alias/register";
-import { PrismaClient } from "@prisma/client";
-import { ApolloServer } from "apollo-server";
-import { typeDefs } from "./graphql/schema/index";
-import { resolvers } from "./graphql/resolvers";
-import { PrismaContestRepository } from "./repositories/prisma/PrismaContestRepository";
-import { GetContestsInteractor } from "./usecases/GetContestsInteractor";
+import express from "express";
+import contestsRouter from "./routes/contestRoutes";
 
-const prisma = new PrismaClient();
-const contestRepository = new PrismaContestRepository(prisma);
-const getContestsUsecase = new GetContestsInteractor(contestRepository);
+const app = express();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: {
-    getContestsUsecase,
-  },
-});
+app.use("/contests", contestsRouter);
 
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`);
+app.listen(4000, () => {
+  console.log("server is running on port 4000");
 });
