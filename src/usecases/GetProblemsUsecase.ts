@@ -1,6 +1,6 @@
 import { Problem } from "@/entities/Problem";
 
-export interface GetProblemUsecase {
+export interface GetProblemsUsecase {
   /**
    * Gets a problem object from the backend database
    * @param {number} contestId - The ID of the contest to find.

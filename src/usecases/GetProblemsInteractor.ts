@@ -1,8 +1,8 @@
 import { Problem } from "@/entities/Problem";
 import { ProblemRepository } from "@/repositories/ProblemRepository";
-import { GetProblemUsecase } from "./GetProblemsUsecase";
+import { GetProblemsUsecase } from "./GetProblemsUsecase";
 
-export class GetProblemsInteractor implements GetProblemUsecase {
+export class GetProblemsInteractor implements GetProblemsUsecase {
   private problemRepository;
 
   constructor(problemRepository: ProblemRepository) {
