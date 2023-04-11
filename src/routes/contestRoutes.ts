@@ -12,8 +12,6 @@ const contestRepository = new PrismaContestRepository(prisma);
 const getContestsUsecase = new GetContestsInteractor(contestRepository);
 const contestController = new ContestController(getContestsUsecase);
 
-router.get("/contests", (req, res) =>
-  contestController.getAllContests(req, res)
-);
+router.get("/", (req, res) => contestController.getAllContests(req, res));
 
 export default router;
