@@ -3,7 +3,7 @@ import contestsRouter from "./contestRoutes";
 import problemsRouter from "./problemRoutes";
 
 const router = Router();
-router.use("/contests", contestsRouter);
-router.use("/problems", problemsRouter);
+router.use("/api/contests", contestsRouter);
+router.use("/api/problems", problemsRouter);
 
 export default router;
