@@ -42,11 +42,10 @@ export class UserController {
   }
 
   async exchangeCodeForAccessToken(req: Request, res: Response): Promise<void> {
-    const { code, state } = req.body;
+    const { code } = req.body;
     try {
       const accessToken = await this.userUseCase.exchangeCodeForAccessToken(
-        code,
-        state
+        code
       );
       res.status(200).json({ accessToken });
     } catch (error) {

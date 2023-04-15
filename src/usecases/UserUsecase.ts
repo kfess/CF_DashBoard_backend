@@ -14,6 +14,6 @@ export interface UserUseCase {
 
   delete(githubId: string): Promise<void>;
 
-  exchangeCodeForAccessToken(code: string, state: string): Promise<string>;
+  exchangeCodeForAccessToken(code: string): Promise<string>;
   getGithubUser(accessToken: string): Promise<{ id: string; login: string }>;
 }
