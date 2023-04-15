@@ -1,8 +1,8 @@
+import axios from "axios";
 import { User } from "@/entities/User";
 import { UserRepository } from "@/repositories/UserRepository";
 import { UserUseCase } from "@/usecases/UserUsecase";
 
-//interactor for userusecase
 export class UserInteractor implements UserUseCase {
   private userRepository: UserRepository;
 
@@ -28,16 +28,46 @@ export class UserInteractor implements UserUseCase {
   async updateCodeforcesUsername(
     githubId: string,
     codeforcesUsername?: string
-  ): Promise<User> {}
+  ): Promise<User> {
+    const user = await this.userRepository.findByGithubId(githubId);
 
-  async delete(githubId: string): Promise<void> {}
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.codeforcesUsername = codeforcesUsername;
+    return await this.userRepository.update(user);
+  }
+
+  async delete(githubId: string): Promise<void> {
+    await this.userRepository.delete(githubId);
+  }
 
   async exchangeCodeForAccessToken(
     code: string,
     state: string
-  ): Promise<string> {}
+  ): Promise<string> {
+    const response = await axios.post(
+      "http://github.com/login/oauth/access_token",
+      {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code,
+        state,
+      },
+      { headers: { Accept: "application/json" } }
+    );
+
+    return response.data.access_token;
+  }
 
   async getGithubUser(
     accessToken: string
-  ): Promise<{ id: string; login: string }> {}
+  ): Promise<{ id: string; login: string }> {
+    const response = await axios.get("https://api.github.com/user", {
+      headers: { Authorization: `token ${accessToken}` },
+    });
+
+    return { id: response.data.id, login: response.data.login };
+  }
 }

@@ -25,7 +25,7 @@ export class PrismaUserRepository implements UserRepository {
 
   async update(user: User): Promise<User> {
     const updatedUser = await this.prisma.user.update({
-      where: { id: user.id },
+      where: { githubId: user.githubId },
       data: this.fromEntity(user),
     });
     return this.toEntity(updatedUser);
@@ -37,7 +37,6 @@ export class PrismaUserRepository implements UserRepository {
 
   private toEntity(user: PrismaUser): User {
     return new User(
-      user.id,
       user.githubId,
       user.githubUsername,
       user.codeforcesUsername ?? undefined
@@ -46,7 +45,6 @@ export class PrismaUserRepository implements UserRepository {
 
   private fromEntity(user: User): Prisma.UserCreateInput {
     return {
-      id: user.id,
       githubId: user.githubId,
       githubUsername: user.githubUsername,
       codeforcesUsername: user.codeforcesUsername ?? null,
