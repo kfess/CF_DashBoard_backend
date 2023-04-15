@@ -68,6 +68,8 @@ export class UserInteractor implements UserUseCase {
       headers: { Authorization: `token ${accessToken}` },
     });
 
+    await this.findOrCreateByGithubId(response.data.id, response.data.login);
+
     return { id: response.data.id, login: response.data.login };
   }
 }
