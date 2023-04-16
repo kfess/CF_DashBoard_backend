@@ -5,7 +5,6 @@ import { PrismaUserRepository } from "@/repositories/prisma/prismaUserRepository
 import { UserInteractor } from "@/usecases/UserInteractor";
 import { UserController } from "@/controllers/userController";
 import { authenticate } from "@/middlewares/authenticate";
-import { AuthenticatedRequest } from "@/middlewares/type";
 
 const router = Router();
 
@@ -20,7 +19,7 @@ router.post("/exchange", (req, res) =>
 );
 
 // get user info with github id, name and codeforces username
-router.get("/get", authenticate, (req: AuthenticatedRequest, res) =>
+router.get("/get", authenticate, (req, res) =>
   userController.getGithubUser(req, res)
 );
 
@@ -29,7 +28,7 @@ router.get("/findOrCreate", (req, res) =>
 );
 
 // update codeforces username
-router.put("/update", authenticate, (req: AuthenticatedRequest, res) =>
+router.put("/update", authenticate, (req, res) =>
   userController.updateCodeforcesUsername(req, res)
 );
 

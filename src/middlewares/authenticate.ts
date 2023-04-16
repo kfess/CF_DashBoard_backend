@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { AuthenticatedRequest, UserPayload } from "./type";
 
 export const authenticate = (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -14,10 +13,7 @@ export const authenticate = (
   }
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    ) as UserPayload;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
     req.user = decoded;
 
     next();

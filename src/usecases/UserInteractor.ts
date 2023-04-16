@@ -58,10 +58,14 @@ export class UserInteractor implements UserUseCase {
     return response.data.access_token;
   }
 
-  createJWT(githubId: number): string {
-    const token = jwt.sign({ githubId }, process.env.JWT_SECRET as string, {
-      expiresIn: "30d",
-    });
+  createJWT(githubId: number, githubUsername: string): string {
+    const token = jwt.sign(
+      { githubId: githubId, githubUsername: githubUsername },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "30d",
+      }
+    );
     return token;
   }
 

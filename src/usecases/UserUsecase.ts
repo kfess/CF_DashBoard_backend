@@ -16,7 +16,7 @@ export interface UserUseCase {
 
   exchangeCodeForAccessToken(code: string): Promise<string>;
 
-  createJWT(githubId: number): string;
+  createJWT(githubId: number, githubUsername: string): string;
 
   getGithubUser(accessToken: string): Promise<{ id: number; login: string }>;
 }
