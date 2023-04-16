@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserUseCase } from "@/usecases/UserUsecase";
+import { verifyJWT } from "@/utils/verifyJWT";
 
 export interface UserPayload {
   githubId: number;
@@ -64,6 +65,16 @@ export class UserController {
       res.status(200).json(user);
     } catch (error) {
       res.status(400).json({ message: "failed" });
+    }
+  }
+
+  async verifyJWT(req: Request, res: Response): Promise<void> {
+    const token = req.cookies.authToken || req.headers["authorization"];
+
+    if (token && verifyJWT(token)) {
+      res.status(200).json({ message: "valid token" });
+    } else {
+      res.status(401).json({ message: "invalid token" });
     }
   }
 }

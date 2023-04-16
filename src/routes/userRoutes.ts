@@ -28,4 +28,9 @@ router.get("/find", authenticate, (req, res) =>
   userController.findByGithubId(req, res)
 );
 
+// verify jwt token
+router.get("/verify", authenticate, (req, res) =>
+  userController.verifyJWT(req, res)
+);
+
 export default router;

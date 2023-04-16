@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { verifyJWT } from "@/utils/verifyJWT";
 
 export const authenticate = (
   req: Request,
@@ -9,6 +10,10 @@ export const authenticate = (
   const token = req.cookies.authToken || req.headers["authorization"];
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  if (!verifyJWT(token)) {
+    return res.status(401).json({ message: "Invalid token" });
   }
 
   try {
