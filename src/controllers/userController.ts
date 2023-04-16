@@ -47,6 +47,7 @@ export class UserController {
       const accessToken = await this.userUseCase.exchangeCodeForAccessToken(
         code
       );
+
       res.status(200).json({ accessToken });
     } catch (error) {
       res.status(400).json({ message: "failed" });

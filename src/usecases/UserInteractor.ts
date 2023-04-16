@@ -53,7 +53,7 @@ export class UserInteractor implements UserUseCase {
       },
       { headers: { Accept: "application/json" } }
     );
-
+    console.log(response);
     return response.data.access_token;
   }
 
