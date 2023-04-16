@@ -18,11 +18,6 @@ router.post("/exchange", (req, res) =>
   userController.exchangeCodeForAccessToken(req, res)
 );
 
-// get user info with github id, name and codeforces username
-router.get("/get", authenticate, (req, res) =>
-  userController.getGithubUser(req, res)
-);
-
 router.get("/findOrCreate", (req, res) =>
   userController.findOrCreateByGithubId(req, res)
 );

@@ -9,6 +9,7 @@ export interface UserPayload {
 export class UserController {
   constructor(private userUseCase: UserUseCase) {}
 
+  // between backend and frontend and github api server (exchange code for access token)
   async exchangeCodeForAccessToken(req: Request, res: Response): Promise<void> {
     const { code } = req.body;
     try {
@@ -25,18 +26,6 @@ export class UserController {
         githubUser.login
       );
       res.status(200).json({ authToken: jwtToken });
-    } catch (error) {
-      res.status(400).json({ message: "failed" });
-    }
-  }
-
-  async getGithubUser(req: Request, res: Response): Promise<void> {
-    const { accessToken } = req.body;
-    try {
-      const githubUser = await this.userUseCase.getGithubUser(
-        accessToken as string
-      );
-      res.status(200).json(githubUser);
     } catch (error) {
       res.status(400).json({ message: "failed" });
     }
