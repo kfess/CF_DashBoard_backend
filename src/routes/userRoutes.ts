@@ -4,6 +4,8 @@ import { PrismaSingleton } from "../repositories/prisma/prismaSingleton";
 import { PrismaUserRepository } from "@/repositories/prisma/prismaUserRepository";
 import { UserInteractor } from "@/usecases/UserInteractor";
 import { UserController } from "@/controllers/userController";
+import { authenticate } from "@/middlewares/authenticate";
+import { AuthenticatedRequest } from "@/middlewares/type";
 
 const router = Router();
 
@@ -12,18 +14,28 @@ const userRepository = new PrismaUserRepository(prisma);
 const userUsecase = new UserInteractor(userRepository);
 const userController = new UserController(userUsecase);
 
-router.get("/findOrCreate", (req, res) =>
-  userController.findOrCreateByGithubId(req, res)
-);
-router.put("/update", (req, res) =>
-  userController.updateCodeforcesUsername(req, res)
-);
-router.delete("/delete/:githubId", (req, res) =>
-  userController.delete(req, res)
-);
+// exchange code for access token, create user if not exists, and return jwt token
 router.post("/exchange", (req, res) =>
   userController.exchangeCodeForAccessToken(req, res)
 );
-router.get("/githubUser", (req, res) => userController.getGithubUser(req, res));
+
+// get user info with github id, name and codeforces username
+router.get("/get", authenticate, (req: AuthenticatedRequest, res) =>
+  userController.getGithubUser(req, res)
+);
+
+router.get("/findOrCreate", (req, res) =>
+  userController.findOrCreateByGithubId(req, res)
+);
+
+// update codeforces username
+router.put("/update", authenticate, (req: AuthenticatedRequest, res) =>
+  userController.updateCodeforcesUsername(req, res)
+);
+
+// delete user with github id
+router.delete("/delete/:githubId", (req, res) =>
+  userController.delete(req, res)
+);
 
 export default router;

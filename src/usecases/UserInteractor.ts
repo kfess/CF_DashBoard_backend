@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import { User } from "@/entities/User";
 import { UserRepository } from "@/repositories/UserRepository";
 import { UserUseCase } from "@/usecases/UserUsecase";
@@ -39,7 +40,7 @@ export class UserInteractor implements UserUseCase {
     return await this.userRepository.update(user);
   }
 
-  async delete(githubId: string): Promise<void> {
+  async delete(githubId: number): Promise<void> {
     await this.userRepository.delete(githubId);
   }
 
@@ -55,6 +56,13 @@ export class UserInteractor implements UserUseCase {
     );
 
     return response.data.access_token;
+  }
+
+  createJWT(githubId: number): string {
+    const token = jwt.sign({ githubId }, process.env.JWT_SECRET as string, {
+      expiresIn: "30d",
+    });
+    return token;
   }
 
   async getGithubUser(

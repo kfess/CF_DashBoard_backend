@@ -4,5 +4,5 @@ export interface UserRepository {
   findByGithubId(githubId: number): Promise<User | null>;
   create(user: User): Promise<User>;
   update(user: User): Promise<User>;
-  delete(githubId: string): Promise<void>;
+  delete(githubId: number): Promise<void>;
 }

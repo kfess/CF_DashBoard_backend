@@ -31,7 +31,7 @@ export class PrismaUserRepository implements UserRepository {
     return this.toEntity(updatedUser);
   }
 
-  async delete(githubId: string): Promise<void> {
+  async delete(githubId: number): Promise<void> {
     await this.prisma.user.delete({ where: { githubId: githubId } });
   }
 

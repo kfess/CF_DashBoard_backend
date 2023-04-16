@@ -12,9 +12,11 @@ export interface UserUseCase {
     codeforcesUsername?: string
   ): Promise<User>;
 
-  delete(githubId: string): Promise<void>;
+  delete(githubId: number): Promise<void>;
 
   exchangeCodeForAccessToken(code: string): Promise<string>;
+
+  createJWT(githubId: number): string;
 
   getGithubUser(accessToken: string): Promise<{ id: number; login: string }>;
 }
