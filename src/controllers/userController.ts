@@ -40,20 +40,6 @@ export class UserController {
     }
   }
 
-  async findOrCreateByGithubId(req: Request, res: Response): Promise<void> {
-    const { githubId, githubUsername, codeforcesUsername } = req.body;
-    try {
-      const user = await this.userUseCase.findOrCreateByGithubId(
-        githubId,
-        githubUsername,
-        codeforcesUsername
-      );
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(400).json({ message: "failed" });
-    }
-  }
-
   // to update codeforces username, authentification is required
   async updateCodeforcesUsername(req: Request, res: Response): Promise<void> {
     const { codeforcesUsername } = req.body;
@@ -69,6 +55,30 @@ export class UserController {
       res.status(400).json({ message: "failed" });
     }
   }
+
+  async findOrCreateByGithubId(req: Request, res: Response): Promise<void> {
+    const { githubId, githubUsername, codeforcesUsername } = req.body;
+    try {
+      const user = await this.userUseCase.findOrCreateByGithubId(
+        githubId,
+        githubUsername,
+        codeforcesUsername
+      );
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(400).json({ message: "failed" });
+    }
+  }
+
+  async findByGithubId(req: Request, res: Response): Promise<void> {
+    const { githubId } = req.body;
+    try {
+      const user = await this.userUseCase.findByGithubId(githubId);
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(400).json({ message: "failed" });
+    }
+  
 
   async delete(req: Request, res: Response): Promise<void> {
     const { githubId } = req.body;

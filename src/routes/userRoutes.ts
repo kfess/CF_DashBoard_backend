@@ -23,8 +23,8 @@ router.put("/update", authenticate, (req, res) =>
   userController.updateCodeforcesUsername(req, res)
 );
 
-router.get("/findOrCreate", (req, res) =>
-  userController.findOrCreateByGithubId(req, res)
+router.get("/find", authenticate, (req, res) =>
+  userController.findByGithubId(req, res)
 );
 
 // delete user with github id

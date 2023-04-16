@@ -26,6 +26,14 @@ export class UserInteractor implements UserUseCase {
     return user;
   }
 
+  async findByGithubId(githubId: number): Promise<User | undefined> {
+    const user = await this.userRepository.findByGithubId(githubId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  }
+
   async updateCodeforcesUsername(
     githubId: number,
     codeforcesUsername?: string

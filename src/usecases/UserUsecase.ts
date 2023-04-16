@@ -7,6 +7,8 @@ export interface UserUseCase {
     codeforcesUsername?: string
   ): Promise<User>;
 
+  findByGithubId(githubId: number): Promise<User | undefined>;
+
   updateCodeforcesUsername(
     githubId: number,
     codeforcesUsername?: string
