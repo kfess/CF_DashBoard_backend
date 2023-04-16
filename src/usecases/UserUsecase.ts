@@ -14,8 +14,6 @@ export interface UserUseCase {
     codeforcesUsername?: string
   ): Promise<User>;
 
-  delete(githubId: number): Promise<void>;
-
   exchangeCodeForAccessToken(code: string): Promise<string>;
 
   createJWT(githubId: number, githubUsername: string): string;

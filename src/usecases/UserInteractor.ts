@@ -48,10 +48,6 @@ export class UserInteractor implements UserUseCase {
     return await this.userRepository.update(user);
   }
 
-  async delete(githubId: number): Promise<void> {
-    await this.userRepository.delete(githubId);
-  }
-
   async exchangeCodeForAccessToken(code: string): Promise<string> {
     const response = await axios.post(
       "https://github.com/login/oauth/access_token",

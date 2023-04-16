@@ -23,6 +23,7 @@ router.put("/update", authenticate, (req, res) =>
   userController.updateCodeforcesUsername(req, res)
 );
 
+// get user
 router.get("/find", authenticate, (req, res) =>
   userController.findByGithubId(req, res)
 );
