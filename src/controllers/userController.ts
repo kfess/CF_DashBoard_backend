@@ -56,20 +56,6 @@ export class UserController {
     }
   }
 
-  async findOrCreateByGithubId(req: Request, res: Response): Promise<void> {
-    const { githubId, githubUsername, codeforcesUsername } = req.body;
-    try {
-      const user = await this.userUseCase.findOrCreateByGithubId(
-        githubId,
-        githubUsername,
-        codeforcesUsername
-      );
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(400).json({ message: "failed" });
-    }
-  }
-
   async findByGithubId(req: Request, res: Response): Promise<void> {
     const { githubId } = req.body;
     try {
@@ -78,7 +64,7 @@ export class UserController {
     } catch (error) {
       res.status(400).json({ message: "failed" });
     }
-  
+  }
 
   async delete(req: Request, res: Response): Promise<void> {
     const { githubId } = req.body;

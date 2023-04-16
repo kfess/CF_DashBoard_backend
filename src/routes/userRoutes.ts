@@ -28,7 +28,7 @@ router.get("/find", authenticate, (req, res) =>
 );
 
 // delete user with github id
-router.delete("/delete/:githubId", (req, res) =>
+router.delete("/delete/:githubId", authenticate, (req, res) =>
   userController.delete(req, res)
 );
 
