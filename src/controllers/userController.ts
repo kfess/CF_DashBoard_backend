@@ -25,7 +25,16 @@ export class UserController {
         githubUser.id,
         githubUser.login
       );
-      res.status(200).json({ authToken: jwtToken });
+
+      res.cookie("authToken", jwtToken, {
+        httpOnly: true,
+        // secure: true, // for https
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+      });
+      res.status(200).json({
+        githubId: githubUser.id,
+        githubUsername: githubUser.login,
+      });
     } catch (error) {
       res.status(400).json({ message: "failed" });
     }
