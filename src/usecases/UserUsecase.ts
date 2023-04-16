@@ -2,18 +2,19 @@ import { User } from "@/entities/User";
 
 export interface UserUseCase {
   findOrCreateByGithubId(
-    githubId: string,
+    githubId: number,
     githubUsername: string,
     codeforcesUsername?: string
   ): Promise<User>;
 
   updateCodeforcesUsername(
-    githubId: string,
+    githubId: number,
     codeforcesUsername?: string
   ): Promise<User>;
 
   delete(githubId: string): Promise<void>;
 
   exchangeCodeForAccessToken(code: string): Promise<string>;
-  getGithubUser(accessToken: string): Promise<{ id: string; login: string }>;
+
+  getGithubUser(accessToken: string): Promise<{ id: number; login: string }>;
 }

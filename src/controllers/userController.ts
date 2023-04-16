@@ -47,9 +47,14 @@ export class UserController {
       const accessToken = await this.userUseCase.exchangeCodeForAccessToken(
         code
       );
-
+      const githubUser = await this.userUseCase.getGithubUser(accessToken);
+      await this.userUseCase.findOrCreateByGithubId(
+        githubUser.id,
+        githubUser.login
+      );
       res.status(200).json({ accessToken });
     } catch (error) {
+      console.log(error);
       res.status(400).json({ message: "failed" });
     }
   }

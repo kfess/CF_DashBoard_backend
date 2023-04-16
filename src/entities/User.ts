@@ -1,10 +1,10 @@
 export class User {
-  githubId: string;
+  githubId: number;
   githubUsername: string;
   codeforcesUsername?: string;
 
   constructor(
-    githubId: string,
+    githubId: number,
     githubUsername: string,
     codeforcesUsername?: string
   ) {

@@ -9,7 +9,7 @@ export class PrismaUserRepository implements UserRepository {
     this.prisma = prisma;
   }
 
-  async findByGithubId(githubId: string): Promise<User | null> {
+  async findByGithubId(githubId: number): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: { githubId: githubId },
     });

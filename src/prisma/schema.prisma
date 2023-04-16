@@ -10,7 +10,7 @@ datasource db {
 
 model User {
   id                 String @id @default(uuid())
-  githubId           String @unique
+  githubId           Int @unique
   githubUsername     String
   codeforcesUsername String?
   labels             Label[]
@@ -86,7 +86,7 @@ model CustomContestProblem {
 
 model Label {
   id                    Int             @id
-  githubId              String
+  githubId              Int
   name                  String
   description           String
   color                 String
