@@ -18,13 +18,13 @@ router.post("/exchange", (req, res) =>
   userController.exchangeCodeForAccessToken(req, res)
 );
 
-router.get("/findOrCreate", (req, res) =>
-  userController.findOrCreateByGithubId(req, res)
-);
-
 // update codeforces username
 router.put("/update", authenticate, (req, res) =>
   userController.updateCodeforcesUsername(req, res)
+);
+
+router.get("/findOrCreate", (req, res) =>
+  userController.findOrCreateByGithubId(req, res)
 );
 
 // delete user with github id
