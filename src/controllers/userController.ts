@@ -57,20 +57,11 @@ export class UserController {
   }
 
   async findByGithubId(req: Request, res: Response): Promise<void> {
-    const { githubId } = req.body;
+    const { githubId } = req.user as UserPayload;
+
     try {
       const user = await this.userUseCase.findByGithubId(githubId);
       res.status(200).json(user);
-    } catch (error) {
-      res.status(400).json({ message: "failed" });
-    }
-  }
-
-  async delete(req: Request, res: Response): Promise<void> {
-    const { githubId } = req.body;
-    try {
-      await this.userUseCase.delete(githubId);
-      res.status(200).json({ message: "success" });
     } catch (error) {
       res.status(400).json({ message: "failed" });
     }
