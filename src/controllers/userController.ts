@@ -30,11 +30,13 @@ export class UserController {
       res.cookie("authToken", jwtToken, {
         httpOnly: true,
         // secure: true, // for https
+        sameSite: "strict",
         maxAge: 1000 * 60 * 60 * 24 * 30,
       });
       res.status(200).json({
         githubId: githubUser.id,
         githubUsername: githubUser.login,
+        isLoggedIn: true,
       });
     } catch (error) {
       res.status(400).json({ message: "failed" });
@@ -51,7 +53,7 @@ export class UserController {
         githubId,
         codeforcesUsername
       );
-      res.status(200).json(user);
+      res.status(200).json({ ...user, isLoggedIn: true });
     } catch (error) {
       res.status(400).json({ message: "failed" });
     }
@@ -62,7 +64,7 @@ export class UserController {
 
     try {
       const user = await this.userUseCase.findByGithubId(githubId);
-      res.status(200).json(user);
+      res.status(200).json({ ...user, isLoggedIn: true });
     } catch (error) {
       res.status(400).json({ message: "failed" });
     }
