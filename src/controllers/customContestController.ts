@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { GetCustomContestUsecase } from "@/usecases/GetCustomContestUsecase";
+import { CustomContest, CustomContestProblem } from "@/entities/CustomContest";
 
 export class CustomContestController {
   constructor(private getCustomContestUsecase: GetCustomContestUsecase) {}
@@ -39,12 +40,41 @@ export class CustomContestController {
 
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const customContest = req.body;
-      const createdContest = await this.getCustomContestUsecase.create(
-        customContest
+      const {
+        title,
+        description,
+        owner,
+        ownerId,
+        problems,
+        startTime,
+        endTime,
+        penalty,
+        mode,
+        visibility,
+        participants,
+      } = req.body;
+
+      const customContestProblems = problems.map(
+        (problem: CustomContestProblem) => new CustomContestProblem(problem)
       );
-      res.status(201).json(createdContest);
+
+      const customContest = new CustomContest({
+        title,
+        description,
+        owner,
+        ownerId,
+        problems: customContestProblems,
+        startTime: new Date(startTime),
+        endTime: new Date(endTime),
+        penalty,
+        mode,
+        visibility,
+        participants,
+      });
+
+      res.status(201).json(customContest);
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: "failed" });
     }
   }

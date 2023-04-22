@@ -63,6 +63,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
       return this.toEntity(createdContest, createdContest.problems);
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

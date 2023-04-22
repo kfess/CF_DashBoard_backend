@@ -21,7 +21,7 @@ export class CustomContestProblem {
 }
 
 export class CustomContest {
-  public contestId: string; // UUID
+  public contestId: string | undefined; // UUID
   public title: string;
   public description: string;
   public owner: string;
@@ -33,8 +33,6 @@ export class CustomContest {
   public mode: Mode;
   public visibility: boolean;
   public participants: string[];
-  public createdAt: Date;
-  public updatedAt: Date;
 
   constructor({
     contestId,
@@ -49,10 +47,8 @@ export class CustomContest {
     mode,
     visibility,
     participants,
-    createdAt,
-    updatedAt,
   }: {
-    contestId: string; // UUID
+    contestId?: string; // UUID
     title: string;
     description: string;
     owner: string;
@@ -64,8 +60,6 @@ export class CustomContest {
     mode: Mode;
     visibility: boolean;
     participants: string[];
-    createdAt: Date;
-    updatedAt: Date;
   }) {
     this.contestId = contestId;
     this.title = title;
@@ -79,7 +73,5 @@ export class CustomContest {
     this.mode = mode;
     this.visibility = visibility;
     this.participants = participants;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 }
