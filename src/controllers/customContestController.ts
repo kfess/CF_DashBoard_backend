@@ -28,7 +28,8 @@ export class CustomContestController {
 
   async getByOwnerId(req: Request, res: Response): Promise<void> {
     try {
-      const ownerId = req.query.ownerId as string;
+      const ownerId = req.params.ownerId as string;
+      console.log(ownerId);
       const customContests = await this.getCustomContestUsecase.getByOwnerId(
         ownerId
       );
@@ -100,6 +101,7 @@ export class CustomContestController {
       );
       res.status(204).send();
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: "failed" });
     }
   }

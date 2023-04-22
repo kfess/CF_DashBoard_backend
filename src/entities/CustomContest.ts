@@ -1,4 +1,4 @@
-import { Mode } from "@/entities/sharedTypes";
+import { Mode, Visibility } from "@/entities/sharedTypes";
 
 export class CustomContestProblem {
   customContestId: string;
@@ -31,7 +31,7 @@ export class CustomContest {
   public endTime: Date;
   public penalty: number;
   public mode: Mode;
-  public visibility: boolean;
+  public visibility: Visibility;
   public participants: string[];
 
   constructor({
@@ -58,7 +58,7 @@ export class CustomContest {
     endTime: Date;
     penalty: number;
     mode: Mode;
-    visibility: boolean;
+    visibility: Visibility;
     participants: string[];
   }) {
     this.contestId = contestId;

@@ -70,3 +70,5 @@ export type Tag =
   | "no tags";
 
 export type Mode = "Normal" | "Lockout" | "Training";
+
+export type Visibility = "Public" | "Private";

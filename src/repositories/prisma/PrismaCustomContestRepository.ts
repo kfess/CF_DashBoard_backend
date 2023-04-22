@@ -6,7 +6,7 @@ import {
 } from "@prisma/client";
 import { CustomContestRepository } from "@/repositories/CustomContestRepository";
 import { CustomContest, CustomContestProblem } from "@/entities/CustomContest";
-import { Mode } from "@/entities/sharedTypes";
+import { Mode, Visibility } from "@/entities/sharedTypes";
 
 export class PrismaCustomContestRepository implements CustomContestRepository {
   private prisma: PrismaClient;
@@ -146,12 +146,14 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     problems: PrismaCustomContestProblem[]
   ): CustomContest {
     const mode = customContest.mode as Mode;
+    const visibility = customContest.visibility as Visibility;
     const customContestProblems = problems.map((problem) =>
       this.toProblemEntity(problem)
     );
     return new CustomContest({
       ...customContest,
       mode,
+      visibility,
       problems: customContestProblems,
     });
   }
