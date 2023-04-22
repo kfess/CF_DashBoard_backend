@@ -27,9 +27,15 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     }
   }
 
-  async findAll(): Promise<CustomContest[]> {
+  async findAll(userId: string | undefined): Promise<CustomContest[]> {
     try {
       const contests = await this.prisma.customContest.findMany({
+        where: {
+          OR: [
+            { visibility: "Public" },
+            ...(userId ? [{ ownerId: userId }] : []),
+          ],
+        },
         include: { problems: true },
       });
       return contests.map((contest) =>

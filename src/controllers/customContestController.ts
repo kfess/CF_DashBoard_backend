@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import { GetCustomContestUsecase } from "@/usecases/GetCustomContestUsecase";
 import { CustomContest, CustomContestProblem } from "@/entities/CustomContest";
+import { UserPayload } from "./userController";
 
 export class CustomContestController {
   constructor(private getCustomContestUsecase: GetCustomContestUsecase) {}
 
-  async getByContestId(req: Request, res: Response): Promise<void> {
+  async findByContestId(req: Request, res: Response): Promise<void> {
     try {
       const contestId = req.params.contestId;
-      const contest = await this.getCustomContestUsecase.getByContestId(
+      const contest = await this.getCustomContestUsecase.findByContestId(
         contestId
       );
       res.status(200).json(contest);
@@ -17,20 +18,24 @@ export class CustomContestController {
     }
   }
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  async findAll(req: Request, res: Response): Promise<void> {
+    const { githubUsername } = req.user as UserPayload;
+
     try {
-      const customContests = await this.getCustomContestUsecase.getAll();
+      const customContests = await this.getCustomContestUsecase.findAll(
+        githubUsername
+      );
       res.json(customContests);
     } catch (error) {
       res.status(500).json({ message: "failed" });
     }
   }
 
-  async getByOwnerId(req: Request, res: Response): Promise<void> {
+  async findByOwnerId(req: Request, res: Response): Promise<void> {
     try {
       const ownerId = req.params.ownerId as string;
       console.log(ownerId);
-      const customContests = await this.getCustomContestUsecase.getByOwnerId(
+      const customContests = await this.getCustomContestUsecase.findByOwnerId(
         ownerId
       );
       res.json(customContests);

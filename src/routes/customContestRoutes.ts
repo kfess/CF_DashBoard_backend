@@ -4,6 +4,7 @@ import { PrismaSingleton } from "../repositories/prisma/prismaSingleton";
 import { PrismaCustomContestRepository } from "../repositories/prisma/PrismaCustomContestRepository";
 import { GetCustomContestInteractor } from "@/usecases/GetCustomContestInteractor";
 import { CustomContestController } from "@/controllers/customContestController";
+import { getUserIfExist } from "@/middlewares/getUserIfExist";
 
 const router = Router();
 
@@ -17,13 +18,15 @@ const customContestController = new CustomContestController(
 );
 
 router.get("/:contestId", (req, res) =>
-  customContestController.getByContestId(req, res)
+  customContestController.findByContestId(req, res)
 );
 
-router.get("/", (req, res) => customContestController.getAll(req, res));
+router.get("/", getUserIfExist, (req, res) =>
+  customContestController.findAll(req, res)
+);
 
 router.get("/owner/:ownerId", (req, res) => {
-  customContestController.getByOwnerId(req, res);
+  customContestController.findByOwnerId(req, res);
 });
 
 router.post("/", (req, res) => customContestController.create(req, res));
