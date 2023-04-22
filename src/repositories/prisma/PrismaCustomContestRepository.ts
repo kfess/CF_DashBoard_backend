@@ -16,44 +16,68 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
   }
 
   async findByContestId(contestId: string): Promise<CustomContest | null> {
-    const contest = await this.prisma.customContest.findUnique({
-      where: { contestId: contestId },
-      include: { problems: true },
-    });
-    return contest ? this.toEntity(contest, contest.problems) : null;
+    try {
+      const contest = await this.prisma.customContest.findUnique({
+        where: { contestId: contestId },
+        include: { problems: true },
+      });
+      return contest ? this.toEntity(contest, contest.problems) : null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findAll(): Promise<CustomContest[]> {
-    const contests = await this.prisma.customContest.findMany({
-      include: { problems: true },
-    });
-    return contests.map((contest) => this.toEntity(contest, contest.problems));
+    try {
+      const contests = await this.prisma.customContest.findMany({
+        include: { problems: true },
+      });
+      return contests.map((contest) =>
+        this.toEntity(contest, contest.problems)
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findByOwnerId(ownerId: string): Promise<CustomContest[]> {
-    const contests = await this.prisma.customContest.findMany({
-      where: { ownerId: ownerId },
-      include: { problems: true },
-    });
-    return contests.map((contest) => this.toEntity(contest, contest.problems));
+    try {
+      const contests = await this.prisma.customContest.findMany({
+        where: { ownerId: ownerId },
+        include: { problems: true },
+      });
+      return contests.map((contest) =>
+        this.toEntity(contest, contest.problems)
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 
   async create(customContest: CustomContest): Promise<CustomContest> {
-    const createdContest = await this.prisma.customContest.create({
-      data: this.fromEntity(customContest),
-      include: { problems: true },
-    });
+    try {
+      const createdContest = await this.prisma.customContest.create({
+        data: this.fromEntity(customContest),
+        include: { problems: true },
+      });
 
-    return this.toEntity(createdContest, createdContest.problems);
+      return this.toEntity(createdContest, createdContest.problems);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async update(customContest: CustomContest): Promise<CustomContest> {
-    const updatedContest = await this.prisma.customContest.update({
-      where: { contestId: customContest.contestId },
-      data: { ...this.fromEntity(customContest), problems: undefined },
-      include: { problems: true },
-    });
-    return this.toEntity(updatedContest, updatedContest.problems);
+    try {
+      const updatedContest = await this.prisma.customContest.update({
+        where: { contestId: customContest.contestId },
+        data: { ...this.fromEntity(customContest), problems: undefined },
+        include: { problems: true },
+      });
+      return this.toEntity(updatedContest, updatedContest.problems);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async addUserToContest(
