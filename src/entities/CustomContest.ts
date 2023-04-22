@@ -1,5 +1,24 @@
 import { Mode } from "@/entities/sharedTypes";
-import { Problem } from "@/entities/Problem";
+
+export class CustomContestProblem {
+  customContestId: string;
+  problemContestId: number;
+  problemIndex: string;
+
+  constructor({
+    customContestId,
+    problemContestId,
+    problemIndex,
+  }: {
+    customContestId: string;
+    problemContestId: number;
+    problemIndex: string;
+  }) {
+    this.customContestId = customContestId;
+    this.problemContestId = problemContestId;
+    this.problemIndex = problemIndex;
+  }
+}
 
 export class CustomContest {
   public contestId: string; // UUID
@@ -7,7 +26,7 @@ export class CustomContest {
   public description: string;
   public owner: string;
   public ownerId: string;
-  public problems: Problem[];
+  public problems: CustomContestProblem[];
   public startTime: Date;
   public endTime: Date;
   public penalty: number;
@@ -17,22 +36,37 @@ export class CustomContest {
   public createdAt: Date;
   public updatedAt: Date;
 
-  constructor(
-    contestId: string, // UUID
-    title: string,
-    description: string,
-    owner: string,
-    ownerId: string,
-    problems: Problem[],
-    startTime: Date,
-    endTime: Date,
-    penalty: number,
-    mode: Mode,
-    visibility: boolean,
-    participants: string[],
-    createdAt: Date,
-    updatedAt: Date
-  ) {
+  constructor({
+    contestId,
+    title,
+    description,
+    owner,
+    ownerId,
+    problems,
+    startTime,
+    endTime,
+    penalty,
+    mode,
+    visibility,
+    participants,
+    createdAt,
+    updatedAt,
+  }: {
+    contestId: string; // UUID
+    title: string;
+    description: string;
+    owner: string;
+    ownerId: string;
+    problems: CustomContestProblem[];
+    startTime: Date;
+    endTime: Date;
+    penalty: number;
+    mode: Mode;
+    visibility: boolean;
+    participants: string[];
+    createdAt: Date;
+    updatedAt: Date;
+  }) {
     this.contestId = contestId;
     this.title = title;
     this.description = description;

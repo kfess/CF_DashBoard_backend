@@ -40,7 +40,7 @@ model Contest {
 }
 
 model CustomContest {
-  contestId             String          @id
+  contestId             String          @id @default(uuid())
   title                 String
   description           String
   owner                 String
@@ -75,7 +75,7 @@ model Problem {
 }
 
 model CustomContestProblem {
-  id               Int            @id @unique
+  id               Int            @id @default(autoincrement())
   customContestId  String
   problemContestId Int
   problemIndex     String
