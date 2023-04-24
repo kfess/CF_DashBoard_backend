@@ -17,9 +17,7 @@ export class GetCustomContestInteractor implements GetCustomContestUsecase {
     return this.customContestRepository.findAll(userId);
   }
 
-  async findMyContests(
-    ownerId: string
-  ): Promise<{
+  async findMyContests(ownerId: string): Promise<{
     createdContests: CustomContest[];
     participatedContests: CustomContest[];
   }> {

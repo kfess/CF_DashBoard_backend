@@ -1,26 +1,6 @@
 import { Mode, Visibility } from "@/entities/sharedTypes";
 import { Problem } from "@/entities/Problem";
 
-// export class CustomContestProblem {
-//   customContestId: string;
-//   problemContestId: number;
-//   problemIndex: string;
-
-//   constructor({
-//     customContestId,
-//     problemContestId,
-//     problemIndex,
-//   }: {
-//     customContestId: string;
-//     problemContestId: number;
-//     problemIndex: string;
-//   }) {
-//     this.customContestId = customContestId;
-//     this.problemContestId = problemContestId;
-//     this.problemIndex = problemIndex;
-//   }
-// }
-
 export class CustomContest {
   public contestId: string | undefined; // UUID
   public title: string;

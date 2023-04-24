@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { GetCustomContestUsecase } from "@/usecases/GetCustomContestUsecase";
-import { CustomContest, CustomContestProblem } from "@/entities/CustomContest";
+import { CustomContest } from "@/entities/CustomContest";
+import { Problem } from "@/entities/Problem";
 import { UserPayload } from "./userController";
 
 export class CustomContestController {
@@ -19,16 +20,18 @@ export class CustomContestController {
   }
 
   async findAll(req: Request, res: Response): Promise<void> {
-    const githubUsername = req.user
-      ? (req.user as UserPayload).githubUsername
-      : undefined;
-
     try {
+      const githubUsername = req.user
+        ? (req.user as UserPayload).githubUsername
+        : undefined;
+
       const customContests = await this.getCustomContestUsecase.findAll(
         githubUsername
       );
+      console.log(customContests);
       res.status(200).json(customContests);
     } catch (error) {
+      console.log(error);
       // res.status(500).json({ message: "failed" });
     }
   }
@@ -62,7 +65,7 @@ export class CustomContestController {
       } = req.body;
 
       const customContestProblems = problems.map(
-        (problem: CustomContestProblem) => new CustomContestProblem(problem)
+        (problem: Problem) => new Problem(problem)
       );
 
       const customContest = new CustomContest({

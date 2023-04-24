@@ -11,11 +11,13 @@ export const getUserIfExist = (
   if (!token) {
     req.user = undefined;
     next();
+    return;
   }
 
   if (!verifyJWT(token)) {
     req.user = undefined;
     next();
+    return;
   }
 
   try {
