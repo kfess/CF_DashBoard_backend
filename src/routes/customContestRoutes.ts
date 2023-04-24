@@ -18,10 +18,6 @@ const customContestController = new CustomContestController(
   getCustomContestUsecase
 );
 
-router.get("/:contestId", (req, res) =>
-  customContestController.findByContestId(req, res)
-);
-
 router.get("/all-contests", getUserIfExist, (req, res) =>
   customContestController.findAll(req, res)
 );
@@ -29,6 +25,10 @@ router.get("/all-contests", getUserIfExist, (req, res) =>
 router.get("/my-contests", authenticate, (req, res) => {
   customContestController.findMyContests(req, res);
 });
+
+router.get("/:contestId", (req, res) =>
+  customContestController.findByContestId(req, res)
+);
 
 router.post("/", (req, res) => customContestController.create(req, res));
 

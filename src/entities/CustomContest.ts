@@ -1,24 +1,25 @@
 import { Mode, Visibility } from "@/entities/sharedTypes";
+import { Problem } from "@/entities/Problem";
 
-export class CustomContestProblem {
-  customContestId: string;
-  problemContestId: number;
-  problemIndex: string;
+// export class CustomContestProblem {
+//   customContestId: string;
+//   problemContestId: number;
+//   problemIndex: string;
 
-  constructor({
-    customContestId,
-    problemContestId,
-    problemIndex,
-  }: {
-    customContestId: string;
-    problemContestId: number;
-    problemIndex: string;
-  }) {
-    this.customContestId = customContestId;
-    this.problemContestId = problemContestId;
-    this.problemIndex = problemIndex;
-  }
-}
+//   constructor({
+//     customContestId,
+//     problemContestId,
+//     problemIndex,
+//   }: {
+//     customContestId: string;
+//     problemContestId: number;
+//     problemIndex: string;
+//   }) {
+//     this.customContestId = customContestId;
+//     this.problemContestId = problemContestId;
+//     this.problemIndex = problemIndex;
+//   }
+// }
 
 export class CustomContest {
   public contestId: string | undefined; // UUID
@@ -26,7 +27,7 @@ export class CustomContest {
   public description: string;
   public owner: string;
   public ownerId: string;
-  public problems: CustomContestProblem[];
+  public problems: Problem[];
   public startTime: Date;
   public endTime: Date;
   public penalty: number;
@@ -53,7 +54,7 @@ export class CustomContest {
     description: string;
     owner: string;
     ownerId: string;
-    problems: CustomContestProblem[];
+    problems: Problem[];
     startTime: Date;
     endTime: Date;
     penalty: number;

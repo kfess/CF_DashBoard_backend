@@ -14,20 +14,22 @@ export class CustomContestController {
       );
       res.status(200).json(contest);
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      // res.status(500).json({ message: "failed" });
     }
   }
 
   async findAll(req: Request, res: Response): Promise<void> {
-    const { githubUsername } = req.user as UserPayload;
+    const githubUsername = req.user
+      ? (req.user as UserPayload).githubUsername
+      : undefined;
 
     try {
       const customContests = await this.getCustomContestUsecase.findAll(
         githubUsername
       );
-      res.json(customContests);
+      res.status(200).json(customContests);
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      // res.status(500).json({ message: "failed" });
     }
   }
 
@@ -76,6 +78,8 @@ export class CustomContestController {
         visibility,
         participants,
       });
+
+      await this.getCustomContestUsecase.create(customContest);
 
       res.status(201).json(customContest);
     } catch (error) {

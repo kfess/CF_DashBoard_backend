@@ -2,11 +2,13 @@ import {
   Prisma,
   PrismaClient,
   CustomContest as PrismaCustomContest,
-  CustomContestProblem as PrismaCustomContestProblem,
+  Problem as PrismaProblem,
 } from "@prisma/client";
 import { CustomContestRepository } from "@/repositories/CustomContestRepository";
-import { CustomContest, CustomContestProblem } from "@/entities/CustomContest";
+import { CustomContest } from "@/entities/CustomContest";
 import { Mode, Visibility } from "@/entities/sharedTypes";
+import { ProblemType, Tag, Classification } from "@/entities/sharedTypes";
+import { Problem } from "@/entities/Problem";
 
 export class PrismaCustomContestRepository implements CustomContestRepository {
   private prisma: PrismaClient;
@@ -19,9 +21,13 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     try {
       const contest = await this.prisma.customContest.findUnique({
         where: { contestId: contestId },
-        include: { problems: true },
+        include: { problems: { include: { problem: true } } },
       });
-      return contest ? this.toEntity(contest, contest.problems) : null;
+
+      const problems =
+        contest?.problems.map((problem) => problem.problem) ?? [];
+
+      return contest ? this.toEntity(contest, problems) : null;
     } catch (error) {
       throw error;
     }
@@ -36,12 +42,21 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
             ...(userId ? [{ ownerId: userId }] : []),
           ],
         },
-        include: { problems: true },
+        include: { problems: { include: { problem: true } } },
       });
-      return contests.map((contest) =>
+
+      const cleanedContests = contests.map((contest) => {
+        const cleanedProblems: PrismaProblem[] = contest.problems.map(
+          (problem) => problem.problem
+        );
+        return { ...contest, problems: cleanedProblems };
+      });
+
+      return cleanedContests.map((contest) =>
         this.toEntity(contest, contest.problems)
       );
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -50,9 +65,17 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     try {
       const contests = await this.prisma.customContest.findMany({
         where: { ownerId: ownerId },
-        include: { problems: true },
+        include: { problems: { include: { problem: true } } },
       });
-      return contests.map((contest) =>
+
+      const cleanedContests = contests.map((contest) => {
+        const cleanedProblems: PrismaProblem[] = contest.problems.map(
+          (problem) => problem.problem
+        );
+        return { ...contest, problems: cleanedProblems };
+      });
+
+      return cleanedContests.map((contest) =>
         this.toEntity(contest, contest.problems)
       );
     } catch (error) {
@@ -64,9 +87,17 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     try {
       const contests = await this.prisma.customContest.findMany({
         where: { participants: { has: ownerId } },
-        include: { problems: true },
+        include: { problems: { include: { problem: true } } },
       });
-      return contests.map((contest) =>
+
+      const cleanedContests = contests.map((contest) => {
+        const cleanedProblems: PrismaProblem[] = contest.problems.map(
+          (problem) => problem.problem
+        );
+        return { ...contest, problems: cleanedProblems };
+      });
+
+      return cleanedContests.map((contest) =>
         this.toEntity(contest, contest.problems)
       );
     } catch (error) {
@@ -78,10 +109,13 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     try {
       const createdContest = await this.prisma.customContest.create({
         data: this.fromEntity(customContest),
-        include: { problems: true },
+        include: { problems: { include: { problem: true } } },
       });
 
-      return this.toEntity(createdContest, createdContest.problems);
+      const problems =
+        createdContest?.problems.map((problem) => problem.problem) ?? [];
+
+      return this.toEntity(createdContest, problems);
     } catch (error) {
       console.log(error);
       throw error;
@@ -93,9 +127,13 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
       const updatedContest = await this.prisma.customContest.update({
         where: { contestId: customContest.contestId },
         data: { ...this.fromEntity(customContest), problems: undefined },
-        include: { problems: true },
+        include: { problems: { include: { problem: true } } },
       });
-      return this.toEntity(updatedContest, updatedContest.problems);
+
+      const problems =
+        updatedContest?.problems.map((problem) => problem.problem) ?? [];
+
+      return this.toEntity(updatedContest, problems);
     } catch (error) {
       throw error;
     }
@@ -151,19 +189,40 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     });
   }
 
-  private toProblemEntity(
-    problem: PrismaCustomContestProblem
-  ): CustomContestProblem {
-    return new CustomContestProblem({
-      customContestId: problem.customContestId,
-      problemContestId: problem.problemContestId,
-      problemIndex: problem.problemIndex,
+  // private toProblemEntity(
+  //   problem: PrismaCustomContestProblem
+  // ): CustomContestProblem {
+  //   return new CustomContestProblem({
+  //     customContestId: problem.customContestId,
+  //     problemContestId: problem.problemContestId,
+  //     problemIndex: problem.problemIndex,
+  //   });
+  // }
+
+  private toProblemEntity(problem: PrismaProblem): Problem {
+    const type = problem.type as ProblemType;
+    const tags = problem.tags as Tag[];
+    const classification = problem.classification as Classification;
+    const problemsetName = problem.problemsetName ?? undefined;
+    const points = problem.points ?? undefined;
+    const rating = problem.rating ?? undefined;
+    const solvedCount = problem.solvedCount ?? undefined;
+
+    return new Problem({
+      ...problem,
+      type,
+      tags,
+      classification,
+      problemsetName,
+      points,
+      rating,
+      solvedCount,
     });
   }
 
   private toEntity(
     customContest: PrismaCustomContest,
-    problems: PrismaCustomContestProblem[]
+    problems: PrismaProblem[]
   ): CustomContest {
     const mode = customContest.mode as Mode;
     const visibility = customContest.visibility as Visibility;
@@ -184,8 +243,29 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     const problems: Prisma.CustomContestProblemCreateNestedManyWithoutCustomContestInput =
       {
         create: customContest.problems.map((problem) => ({
-          problemContestId: problem.problemContestId,
-          problemIndex: problem.problemIndex,
+          problem: {
+            connectOrCreate: {
+              create: {
+                contestId: problem.contestId,
+                index: problem.index,
+                name: problem.name,
+                type: problem.type,
+                tags: problem.tags,
+                contestName: problem.contestName,
+                classification: problem.classification,
+                problemsetName: problem.problemsetName,
+                points: problem.points,
+                rating: problem.rating,
+                solvedCount: problem.solvedCount,
+              },
+              where: {
+                contestId_index: {
+                  contestId: problem.contestId,
+                  index: problem.index,
+                },
+              },
+            },
+          },
         })),
       };
 
