@@ -46,10 +46,24 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     }
   }
 
-  async findByOwnerId(ownerId: string): Promise<CustomContest[]> {
+  async findCreatedContests(ownerId: string): Promise<CustomContest[]> {
     try {
       const contests = await this.prisma.customContest.findMany({
         where: { ownerId: ownerId },
+        include: { problems: true },
+      });
+      return contests.map((contest) =>
+        this.toEntity(contest, contest.problems)
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findParticipatedContests(ownerId: string): Promise<CustomContest[]> {
+    try {
+      const contests = await this.prisma.customContest.findMany({
+        where: { participants: { has: ownerId } },
         include: { problems: true },
       });
       return contests.map((contest) =>

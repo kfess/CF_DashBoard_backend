@@ -31,12 +31,11 @@ export class CustomContestController {
     }
   }
 
-  async findByOwnerId(req: Request, res: Response): Promise<void> {
+  async findMyContests(req: Request, res: Response): Promise<void> {
     try {
-      const ownerId = req.params.ownerId as string;
-      console.log(ownerId);
-      const customContests = await this.getCustomContestUsecase.findByOwnerId(
-        ownerId
+      const { githubUsername } = req.user as UserPayload;
+      const customContests = await this.getCustomContestUsecase.findMyContests(
+        githubUsername
       );
       res.json(customContests);
     } catch (error) {
@@ -87,6 +86,13 @@ export class CustomContestController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
+      const { githubUsername } = req.user as UserPayload;
+
+      if (githubUsername !== req.body.ownerId) {
+        res.status(403).json({ message: "forbidden" });
+        return;
+      }
+
       const customContest = req.body;
       const updatedContest = await this.getCustomContestUsecase.update(
         customContest
@@ -113,6 +119,13 @@ export class CustomContestController {
 
   async removeUserFromContest(req: Request, res: Response): Promise<void> {
     try {
+      const { githubUsername } = req.user as UserPayload;
+
+      if (githubUsername !== req.body.ownerId) {
+        res.status(403).json({ message: "forbidden" });
+        return;
+      }
+
       const { participant, contestId } = req.body;
       await this.getCustomContestUsecase.removeUserFromContest(
         participant,

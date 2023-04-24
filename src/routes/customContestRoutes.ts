@@ -5,6 +5,7 @@ import { PrismaCustomContestRepository } from "../repositories/prisma/PrismaCust
 import { GetCustomContestInteractor } from "@/usecases/GetCustomContestInteractor";
 import { CustomContestController } from "@/controllers/customContestController";
 import { getUserIfExist } from "@/middlewares/getUserIfExist";
+import { authenticate } from "@/middlewares/authenticate";
 
 const router = Router();
 
@@ -21,23 +22,25 @@ router.get("/:contestId", (req, res) =>
   customContestController.findByContestId(req, res)
 );
 
-router.get("/", getUserIfExist, (req, res) =>
+router.get("/all-contests", getUserIfExist, (req, res) =>
   customContestController.findAll(req, res)
 );
 
-router.get("/owner/:ownerId", (req, res) => {
-  customContestController.findByOwnerId(req, res);
+router.get("/my-contests", authenticate, (req, res) => {
+  customContestController.findMyContests(req, res);
 });
 
 router.post("/", (req, res) => customContestController.create(req, res));
 
-router.put("/", (req, res) => customContestController.update(req, res));
+router.put("/", authenticate, (req, res) =>
+  customContestController.update(req, res)
+);
 
 router.post("/add-user", (req, res) =>
   customContestController.addUserToContest(req, res)
 );
 
-router.post("/remove-user", (req, res) => {
+router.post("/remove-user", authenticate, (req, res) => {
   customContestController.removeUserFromContest(req, res);
 });
 
