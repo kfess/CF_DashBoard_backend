@@ -45,8 +45,8 @@ model CustomContest {
   description           String
   owner                 String
   ownerId               String
-  startTime             DateTime
-  endTime               DateTime
+  startDate             DateTime
+  endDate               DateTime
   penalty               Int
   mode                  String
   visibility            String

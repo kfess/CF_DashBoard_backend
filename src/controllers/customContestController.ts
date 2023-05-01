@@ -15,24 +15,19 @@ export class CustomContestController {
       );
       res.status(200).json(contest);
     } catch (error) {
-      // res.status(500).json({ message: "failed" });
+      res.status(500).json({ message: "failed" });
     }
   }
 
   async findAll(req: Request, res: Response): Promise<void> {
     try {
-      const githubUsername = req.user
-        ? (req.user as UserPayload).githubUsername
-        : undefined;
-
+      const { githubUsername } = req.user as UserPayload;
       const customContests = await this.getCustomContestUsecase.findAll(
         githubUsername
       );
-      console.log(customContests);
       res.status(200).json(customContests);
     } catch (error) {
-      console.log(error);
-      // res.status(500).json({ message: "failed" });
+      res.status(500).json({ message: "failed" });
     }
   }
 
@@ -42,7 +37,7 @@ export class CustomContestController {
       const customContests = await this.getCustomContestUsecase.findMyContests(
         githubUsername
       );
-      res.json(customContests);
+      res.status(200).json(customContests);
     } catch (error) {
       res.status(500).json({ message: "failed" });
     }
@@ -56,8 +51,8 @@ export class CustomContestController {
         owner,
         ownerId,
         problems,
-        startTime,
-        endTime,
+        startDate,
+        endDate,
         penalty,
         mode,
         visibility,
@@ -74,8 +69,8 @@ export class CustomContestController {
         owner,
         ownerId,
         problems: customContestProblems,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
         penalty,
         mode,
         visibility,
@@ -113,6 +108,7 @@ export class CustomContestController {
   async addUserToContest(req: Request, res: Response): Promise<void> {
     try {
       const { participant, contestId } = req.body;
+      console.log(participant, contestId);
       await this.getCustomContestUsecase.addUserToContest(
         participant,
         contestId

@@ -20,12 +20,12 @@ export const getUserIfExist = (
     return;
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded;
-    next();
-  } catch (error) {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+  if (!decoded) {
     req.user = undefined;
     next();
+    return;
   }
+  req.user = decoded;
+  next();
 };

@@ -8,8 +8,8 @@ export class CustomContest {
   public owner: string;
   public ownerId: string;
   public problems: Problem[];
-  public startTime: Date;
-  public endTime: Date;
+  public startDate: Date;
+  public endDate: Date;
   public penalty: number;
   public mode: Mode;
   public visibility: Visibility;
@@ -22,8 +22,8 @@ export class CustomContest {
     owner,
     ownerId,
     problems,
-    startTime,
-    endTime,
+    startDate,
+    endDate,
     penalty,
     mode,
     visibility,
@@ -35,8 +35,8 @@ export class CustomContest {
     owner: string;
     ownerId: string;
     problems: Problem[];
-    startTime: Date;
-    endTime: Date;
+    startDate: Date;
+    endDate: Date;
     penalty: number;
     mode: Mode;
     visibility: Visibility;
@@ -48,8 +48,8 @@ export class CustomContest {
     this.owner = owner;
     this.ownerId = ownerId;
     this.problems = problems;
-    this.startTime = startTime;
-    this.endTime = endTime;
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.penalty = penalty;
     this.mode = mode;
     this.visibility = visibility;
