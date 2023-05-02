@@ -11,7 +11,7 @@ datasource db {
 model User {
   id                 String @id @default(uuid())
   githubId           Int @unique
-  githubUsername     String
+  githubUsername     String @unique
   codeforcesUsername String?
   labels             Label[]
 }

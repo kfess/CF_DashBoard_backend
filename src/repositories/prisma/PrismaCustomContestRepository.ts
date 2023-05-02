@@ -83,10 +83,15 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     }
   }
 
+  // need to fix this
   async findParticipatedContests(ownerId: string): Promise<CustomContest[]> {
     try {
+      const user = await this.prisma.user.findUnique({
+        where: { githubUsername: ownerId },
+      });
+
       const contests = await this.prisma.customContest.findMany({
-        where: { participants: { has: ownerId } },
+        where: { participants: { has: user?.codeforcesUsername } },
         include: { problems: { include: { problem: true } } },
       });
 
@@ -188,16 +193,6 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
       data: { participants: updatedParticipants },
     });
   }
-
-  // private toProblemEntity(
-  //   problem: PrismaCustomContestProblem
-  // ): CustomContestProblem {
-  //   return new CustomContestProblem({
-  //     customContestId: problem.customContestId,
-  //     problemContestId: problem.problemContestId,
-  //     problemIndex: problem.problemIndex,
-  //   });
-  // }
 
   private toProblemEntity(problem: PrismaProblem): Problem {
     const type = problem.type as ProblemType;

@@ -1,8 +1,12 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { Request, Response } from "express";
 import { GetCustomContestUsecase } from "@/usecases/GetCustomContestUsecase";
 import { CustomContest } from "@/entities/CustomContest";
 import { Problem } from "@/entities/Problem";
 import { UserPayload } from "./userController";
+
+dayjs.extend(utc);
 
 export class CustomContestController {
   constructor(private getCustomContestUsecase: GetCustomContestUsecase) {}
@@ -108,7 +112,6 @@ export class CustomContestController {
   async addUserToContest(req: Request, res: Response): Promise<void> {
     try {
       const { participant, contestId } = req.body;
-      console.log(participant, contestId);
       await this.getCustomContestUsecase.addUserToContest(
         participant,
         contestId
