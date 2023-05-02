@@ -81,9 +81,11 @@ export class CustomContestController {
         participants,
       });
 
-      await this.getCustomContestUsecase.create(customContest);
+      const createdCustomContest = await this.getCustomContestUsecase.create(
+        customContest
+      );
 
-      res.status(201).json(customContest);
+      res.status(201).json(createdCustomContest);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "failed" });
