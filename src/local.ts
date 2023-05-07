@@ -1,4 +1,5 @@
 import "module-alias/register";
+import "dotenv/config";
 import { checkEnvVars } from "@/utils/checkEnvVars";
 import compression from "compression";
 import express from "express";
@@ -17,9 +18,8 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 app.use(router);
-
 app.listen(4000, () => {
   console.log("server is running on port 4000");
 });
