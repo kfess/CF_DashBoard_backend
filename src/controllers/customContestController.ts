@@ -25,7 +25,7 @@ export class CustomContestController {
 
   async findAll(req: Request, res: Response): Promise<void> {
     try {
-      const { githubUsername } = req.user as UserPayload;
+      const { githubUsername } = (req.user as UserPayload) || {};
       const customContests = await this.getCustomContestUsecase.findAll(
         githubUsername
       );
