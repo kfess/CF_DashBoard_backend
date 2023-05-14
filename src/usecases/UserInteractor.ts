@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
-import { User } from "@/entities/User";
-import { UserRepository } from "@/repositories/UserRepository";
-import { UserUseCase } from "@/usecases/UserUsecase";
+import { User } from "../entities/User";
+import { UserRepository } from "../repositories/UserRepository";
+import { UserUseCase } from "../usecases/UserUsecase";
 
 export class UserInteractor implements UserUseCase {
   private userRepository: UserRepository;

@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient, Problem as PrismaProblem } from "@prisma/client";
-import { ProblemType, Tag, Classification } from "@/entities/sharedTypes";
-import { Problem } from "@/entities/Problem";
-import { ProblemRepository } from "@/repositories/ProblemRepository";
+import { ProblemType, Tag, Classification } from "../../entities/sharedTypes";
+import { Problem } from "../../entities/Problem";
+import { ProblemRepository } from "../../repositories/ProblemRepository";
 
 export class PrismaProblemRepository implements ProblemRepository {
   private prisma: PrismaClient;

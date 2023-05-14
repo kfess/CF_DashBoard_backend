@@ -12,9 +12,9 @@ import {
   Phase,
   Kind,
 } from "@/entities/sharedTypes";
-import { Problem } from "@/entities/Problem";
-import { Contest } from "@/entities/Contest";
-import { ContestRepository } from "@/repositories/ContestRepository";
+import { Problem } from "../../entities/Problem";
+import { Contest } from "../../entities/Contest";
+import { ContestRepository } from "../../repositories/ContestRepository";
 
 export class PrismaContestRepository implements ContestRepository {
   private prisma: PrismaClient;

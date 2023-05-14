@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UserUseCase } from "@/usecases/UserUsecase";
-import { verifyJWT } from "@/utils/verifyJWT";
+import { UserUseCase } from "../usecases/UserUsecase";
+import { verifyJWT } from "../utils/verifyJWT";
 
 export interface UserPayload {
   githubId: number;

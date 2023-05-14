@@ -1,4 +1,4 @@
-import { Classification, ProblemType, Tag } from "@/entities/sharedTypes";
+import { Classification, ProblemType, Tag } from "./sharedTypes";
 
 export class Problem {
   readonly contestId: number;

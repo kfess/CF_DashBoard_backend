@@ -1,5 +1,4 @@
-import "module-alias/register";
-import { checkEnvVars } from "@/utils/checkEnvVars";
+import { checkEnvVars } from "./utils/checkEnvVars";
 import serverlessExpress from "@vendia/serverless-express";
 import compression from "compression";
 import express from "express";
@@ -20,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://hj71unck7g.execute-api.ap-northeast-1.amazonaws.com/dev",
+    origin: "https://rn3zdype28.execute-api.ap-northeast-1.amazonaws.com/dev",
     credentials: true,
   })
 );

@@ -1,4 +1,4 @@
-import { Label } from '@/entities/Label';
+import { Label } from '../entities/Label';
 
 export interface ProblemLabelRepository {
   findByUserId(userId: string): Promise<Label[]>;

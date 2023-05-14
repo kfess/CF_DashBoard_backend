@@ -1,6 +1,5 @@
-import "module-alias/register";
 import "dotenv/config";
-import { checkEnvVars } from "@/utils/checkEnvVars";
+import { checkEnvVars } from "./utils/checkEnvVars";
 import compression from "compression";
 import express from "express";
 import cookieParser from "cookie-parser";

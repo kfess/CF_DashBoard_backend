@@ -1,5 +1,5 @@
-import { Problem } from "@/entities/Problem";
-import { ProblemRepository } from "@/repositories/ProblemRepository";
+import { Problem } from "../entities/Problem";
+import { ProblemRepository } from "../repositories/ProblemRepository";
 import { GetProblemsUsecase } from "./GetProblemsUsecase";
 
 export class GetProblemsInteractor implements GetProblemsUsecase {

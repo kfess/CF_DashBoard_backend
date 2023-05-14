@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { GetProblemsUsecase } from "@/usecases/GetProblemsUsecase";
+import { GetProblemsUsecase } from "../usecases/GetProblemsUsecase";
 
 export class ProblemController {
   constructor(private getProblemsUsecase: GetProblemsUsecase) {}

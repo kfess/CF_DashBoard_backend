@@ -1,4 +1,4 @@
-import { Classification } from "@/entities/sharedTypes";
+import { Classification } from "../entities/sharedTypes";
 
 export const getClassification = (contestName: string): Classification => {
   const classifications: Classification[] = [

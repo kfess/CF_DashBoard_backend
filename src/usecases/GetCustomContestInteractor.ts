@@ -1,6 +1,6 @@
-import { CustomContest } from "@/entities/CustomContest";
-import { CustomContestRepository } from "@/repositories/CustomContestRepository";
-import { GetCustomContestUsecase } from "@/usecases/GetCustomContestUsecase";
+import { CustomContest } from "../entities/CustomContest";
+import { CustomContestRepository } from "../repositories/CustomContestRepository";
+import { GetCustomContestUsecase } from "../usecases/GetCustomContestUsecase";
 
 export class GetCustomContestInteractor implements GetCustomContestUsecase {
   private readonly customContestRepository: CustomContestRepository;

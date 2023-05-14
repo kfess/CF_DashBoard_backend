@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Request, Response } from "express";
-import { GetCustomContestUsecase } from "@/usecases/GetCustomContestUsecase";
-import { CustomContest } from "@/entities/CustomContest";
-import { Problem } from "@/entities/Problem";
+import { GetCustomContestUsecase } from "../usecases/GetCustomContestUsecase";
+import { CustomContest } from "../entities/CustomContest";
+import { Problem } from "../entities/Problem";
 import { UserPayload } from "./userController";
 
 dayjs.extend(utc);

@@ -4,11 +4,11 @@ import {
   CustomContest as PrismaCustomContest,
   Problem as PrismaProblem,
 } from "@prisma/client";
-import { CustomContestRepository } from "@/repositories/CustomContestRepository";
-import { CustomContest } from "@/entities/CustomContest";
-import { Mode, Visibility } from "@/entities/sharedTypes";
-import { ProblemType, Tag, Classification } from "@/entities/sharedTypes";
-import { Problem } from "@/entities/Problem";
+import { CustomContestRepository } from "../CustomContestRepository";
+import { CustomContest } from "../../entities/CustomContest";
+import { Mode, Visibility } from "../../entities/sharedTypes";
+import { ProblemType, Tag, Classification } from "../../entities/sharedTypes";
+import { Problem } from "../../entities/Problem";
 
 export class PrismaCustomContestRepository implements CustomContestRepository {
   private prisma: PrismaClient;

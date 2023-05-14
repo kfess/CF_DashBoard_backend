@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { GetContestsUsecase } from "@/usecases/GetContestsUsecase";
+import { GetContestsUsecase } from "../usecases/GetContestsUsecase";
 
 export class ContestController {
   constructor(private getContestsUsecase: GetContestsUsecase) {}

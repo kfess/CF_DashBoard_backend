@@ -1,4 +1,3 @@
-import "module-alias/register";
 import { Router } from "express";
 import { PrismaSingleton } from "../repositories/prisma/prismaSingleton";
 import { PrismaContestRepository } from "../repositories/prisma/PrismaContestRepository";

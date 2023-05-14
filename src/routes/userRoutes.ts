@@ -1,10 +1,9 @@
-import "module-alias/register";
 import { Router } from "express";
 import { PrismaSingleton } from "../repositories/prisma/prismaSingleton";
-import { PrismaUserRepository } from "@/repositories/prisma/prismaUserRepository";
-import { UserInteractor } from "@/usecases/UserInteractor";
-import { UserController } from "@/controllers/userController";
-import { authenticate } from "@/middlewares/authenticate";
+import { PrismaUserRepository } from "../repositories/prisma/prismaUserRepository";
+import { UserInteractor } from "../usecases/UserInteractor";
+import { UserController } from "../controllers/userController";
+import { authenticate } from "../middlewares/authenticate";
 
 const router = Router();
 

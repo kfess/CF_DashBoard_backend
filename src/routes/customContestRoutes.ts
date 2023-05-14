@@ -1,11 +1,10 @@
-import "module-alias/register";
 import { Router } from "express";
 import { PrismaSingleton } from "../repositories/prisma/prismaSingleton";
 import { PrismaCustomContestRepository } from "../repositories/prisma/PrismaCustomContestRepository";
-import { GetCustomContestInteractor } from "@/usecases/GetCustomContestInteractor";
-import { CustomContestController } from "@/controllers/customContestController";
-import { getUserIfExist } from "@/middlewares/getUserIfExist";
-import { authenticate } from "@/middlewares/authenticate";
+import { GetCustomContestInteractor } from "../usecases/GetCustomContestInteractor";
+import { CustomContestController } from "../controllers/customContestController";
+import { getUserIfExist } from "../middlewares/getUserIfExist";
+import { authenticate } from "../middlewares/authenticate";
 
 const router = Router();
 
