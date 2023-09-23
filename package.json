@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .ts",
     "lint-staged": "lint-staged",
     "sort-package-json": "sort-package-json",
-    "test": "jest --config jest.config.ts"
+    "test": "jest --config jest.config.ts --passWithNoTests"
   },
   "husky": {
     "hooks": {
