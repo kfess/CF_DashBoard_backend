@@ -77,7 +77,7 @@ export const tags = [
   "schedules",
   "no tags",
 ] as const;
-export type Tag = typeof tags[number];
+export type Tag = (typeof tags)[number];
 
 const OfficialProblemSchema = z.object({
   contestId: z.number(),
@@ -91,7 +91,7 @@ const OfficialProblemSchema = z.object({
     .array(TagSchema)
     .or(z.array(z.string())) // "tags" is sometimes empty array [], how can this situation be handled more elegantly?
     .transform((val) =>
-      val.length > 0 ? (val as Tag[]) : (["no tags"] as const)
+      val.length > 0 ? (val as Tag[]) : (["no tags"] as const),
     ),
 });
 

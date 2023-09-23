@@ -11,14 +11,14 @@ const router = Router();
 const prisma = PrismaSingleton.getInstance();
 const customContestRepository = new PrismaCustomContestRepository(prisma);
 const getCustomContestUsecase = new GetCustomContestInteractor(
-  customContestRepository
+  customContestRepository,
 );
 const customContestController = new CustomContestController(
-  getCustomContestUsecase
+  getCustomContestUsecase,
 );
 
 router.get("/all-contests", getUserIfExist, (req, res) =>
-  customContestController.findAll(req, res)
+  customContestController.findAll(req, res),
 );
 
 router.get("/my-contests", authenticate, (req, res) => {
@@ -26,17 +26,17 @@ router.get("/my-contests", authenticate, (req, res) => {
 });
 
 router.get("/:contestId", (req, res) =>
-  customContestController.findByContestId(req, res)
+  customContestController.findByContestId(req, res),
 );
 
 router.post("/", (req, res) => customContestController.create(req, res));
 
 router.put("/", authenticate, (req, res) =>
-  customContestController.update(req, res)
+  customContestController.update(req, res),
 );
 
 router.post("/add-user", (req, res) =>
-  customContestController.addUserToContest(req, res)
+  customContestController.addUserToContest(req, res),
 );
 
 router.post("/remove-user", authenticate, (req, res) => {

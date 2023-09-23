@@ -14,7 +14,7 @@ export class Label {
     description: string,
     color: string,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
   ) {
     this.id = id;
     this.githubId = githubId;

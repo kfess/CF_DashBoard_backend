@@ -63,7 +63,7 @@ export class PrismaProblemRepository implements ProblemRepository {
 
   private fromEntity(
     problem: Problem,
-    isUpdate: boolean
+    isUpdate: boolean,
   ): Prisma.ProblemCreateInput {
     const problemData: Prisma.ProblemCreateInput = {
       index: problem.index,

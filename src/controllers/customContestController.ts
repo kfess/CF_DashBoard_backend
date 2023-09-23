@@ -14,9 +14,8 @@ export class CustomContestController {
   async findByContestId(req: Request, res: Response): Promise<void> {
     try {
       const contestId = req.params.contestId;
-      const contest = await this.getCustomContestUsecase.findByContestId(
-        contestId
-      );
+      const contest =
+        await this.getCustomContestUsecase.findByContestId(contestId);
       res.status(200).json(contest);
     } catch (error) {
       res.status(500).json({ message: "failed" });
@@ -26,9 +25,8 @@ export class CustomContestController {
   async findAll(req: Request, res: Response): Promise<void> {
     try {
       const { githubUsername } = (req.user as UserPayload) || {};
-      const customContests = await this.getCustomContestUsecase.findAll(
-        githubUsername
-      );
+      const customContests =
+        await this.getCustomContestUsecase.findAll(githubUsername);
       res.status(200).json(customContests);
     } catch (error) {
       res.status(500).json({ message: "failed" });
@@ -38,9 +36,8 @@ export class CustomContestController {
   async findMyContests(req: Request, res: Response): Promise<void> {
     try {
       const { githubUsername } = req.user as UserPayload;
-      const customContests = await this.getCustomContestUsecase.findMyContests(
-        githubUsername
-      );
+      const customContests =
+        await this.getCustomContestUsecase.findMyContests(githubUsername);
       res.status(200).json(customContests);
     } catch (error) {
       res.status(500).json({ message: "failed" });
@@ -81,9 +78,8 @@ export class CustomContestController {
         participants,
       });
 
-      const createdCustomContest = await this.getCustomContestUsecase.create(
-        customContest
-      );
+      const createdCustomContest =
+        await this.getCustomContestUsecase.create(customContest);
 
       res.status(201).json(createdCustomContest);
     } catch (error) {
@@ -102,9 +98,8 @@ export class CustomContestController {
       }
 
       const customContest = req.body;
-      const updatedContest = await this.getCustomContestUsecase.update(
-        customContest
-      );
+      const updatedContest =
+        await this.getCustomContestUsecase.update(customContest);
       res.json(updatedContest);
     } catch (error) {
       res.status(500).json({ message: "failed" });

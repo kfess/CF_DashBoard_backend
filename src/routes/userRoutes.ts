@@ -14,22 +14,22 @@ const userController = new UserController(userUsecase);
 
 // exchange code for access token, create user if not exists, and return jwt token
 router.post("/exchange", (req, res) =>
-  userController.exchangeCodeForAccessToken(req, res)
+  userController.exchangeCodeForAccessToken(req, res),
 );
 
 // update codeforces username
 router.put("/update", authenticate, (req, res) =>
-  userController.updateCodeforcesUsername(req, res)
+  userController.updateCodeforcesUsername(req, res),
 );
 
 // get user
 router.get("/find", authenticate, (req, res) =>
-  userController.findByGithubId(req, res)
+  userController.findByGithubId(req, res),
 );
 
 // verify jwt token
 router.get("/verify", authenticate, (req, res) =>
-  userController.verifyJWT(req, res)
+  userController.verifyJWT(req, res),
 );
 
 export default router;

@@ -6,7 +6,7 @@ export class User {
   constructor(
     githubId: number,
     githubUsername: string,
-    codeforcesUsername?: string
+    codeforcesUsername?: string,
   ) {
     this.githubId = githubId;
     this.githubUsername = githubUsername;

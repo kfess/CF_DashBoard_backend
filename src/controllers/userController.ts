@@ -14,17 +14,16 @@ export class UserController {
   async exchangeCodeForAccessToken(req: Request, res: Response): Promise<void> {
     const { code } = req.body;
     try {
-      const accessToken = await this.userUseCase.exchangeCodeForAccessToken(
-        code
-      );
+      const accessToken =
+        await this.userUseCase.exchangeCodeForAccessToken(code);
       const githubUser = await this.userUseCase.getGithubUser(accessToken);
       await this.userUseCase.findOrCreateByGithubId(
         githubUser.id,
-        githubUser.login
+        githubUser.login,
       );
       const jwtToken = this.userUseCase.createJWT(
         githubUser.id,
-        githubUser.login
+        githubUser.login,
       );
 
       res.cookie("authToken", jwtToken, {
@@ -51,7 +50,7 @@ export class UserController {
     try {
       const user = await this.userUseCase.updateCodeforcesUsername(
         githubId,
-        codeforcesUsername
+        codeforcesUsername,
       );
       res.status(200).json({ ...user, isLoggedIn: true });
     } catch (error) {

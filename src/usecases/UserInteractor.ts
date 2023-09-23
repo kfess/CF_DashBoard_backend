@@ -14,7 +14,7 @@ export class UserInteractor implements UserUseCase {
   async findOrCreateByGithubId(
     githubId: number,
     githubUsername: string,
-    codeforcesUsername?: string
+    codeforcesUsername?: string,
   ): Promise<User> {
     let user = await this.userRepository.findByGithubId(githubId);
 
@@ -36,7 +36,7 @@ export class UserInteractor implements UserUseCase {
 
   async updateCodeforcesUsername(
     githubId: number,
-    codeforcesUsername?: string
+    codeforcesUsername?: string,
   ): Promise<User> {
     const user = await this.userRepository.findByGithubId(githubId);
 
@@ -56,7 +56,7 @@ export class UserInteractor implements UserUseCase {
         client_secret: process.env.GITHUB_CLIENT_SECRET,
         code,
       },
-      { headers: { Accept: "application/json" } }
+      { headers: { Accept: "application/json" } },
     );
 
     return response.data.access_token;
@@ -68,13 +68,13 @@ export class UserInteractor implements UserUseCase {
       process.env.JWT_SECRET as string,
       {
         expiresIn: "30d",
-      }
+      },
     );
     return token;
   }
 
   async getGithubUser(
-    accessToken: string
+    accessToken: string,
   ): Promise<{ id: number; login: string }> {
     const response = await axios.get("https://api.github.com/user", {
       headers: { Authorization: `token ${accessToken}` },

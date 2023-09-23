@@ -47,13 +47,13 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
       const cleanedContests = contests.map((contest) => {
         const cleanedProblems: PrismaProblem[] = contest.problems.map(
-          (problem) => problem.problem
+          (problem) => problem.problem,
         );
         return { ...contest, problems: cleanedProblems };
       });
 
       return cleanedContests.map((contest) =>
-        this.toEntity(contest, contest.problems)
+        this.toEntity(contest, contest.problems),
       );
     } catch (error) {
       console.log(error);
@@ -70,13 +70,13 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
       const cleanedContests = contests.map((contest) => {
         const cleanedProblems: PrismaProblem[] = contest.problems.map(
-          (problem) => problem.problem
+          (problem) => problem.problem,
         );
         return { ...contest, problems: cleanedProblems };
       });
 
       return cleanedContests.map((contest) =>
-        this.toEntity(contest, contest.problems)
+        this.toEntity(contest, contest.problems),
       );
     } catch (error) {
       throw error;
@@ -97,13 +97,13 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
       const cleanedContests = contests.map((contest) => {
         const cleanedProblems: PrismaProblem[] = contest.problems.map(
-          (problem) => problem.problem
+          (problem) => problem.problem,
         );
         return { ...contest, problems: cleanedProblems };
       });
 
       return cleanedContests.map((contest) =>
-        this.toEntity(contest, contest.problems)
+        this.toEntity(contest, contest.problems),
       );
     } catch (error) {
       throw error;
@@ -146,7 +146,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
   async addUserToContest(
     participant: string,
-    contestId: string
+    contestId: string,
   ): Promise<void> {
     const contest = await this.prisma.customContest.findUnique({
       where: { contestId: contestId },
@@ -170,7 +170,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
   async removeUserFromContest(
     participant: string,
-    contestId: string
+    contestId: string,
   ): Promise<void> {
     const contest = await this.prisma.customContest.findUnique({
       where: { contestId: contestId },
@@ -185,7 +185,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
     }
 
     const updatedParticipants = contest.participants.filter(
-      (p) => p != participant
+      (p) => p != participant,
     );
 
     await this.prisma.customContest.update({
@@ -217,12 +217,12 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
 
   private toEntity(
     customContest: PrismaCustomContest,
-    problems: PrismaProblem[]
+    problems: PrismaProblem[],
   ): CustomContest {
     const mode = customContest.mode as Mode;
     const visibility = customContest.visibility as Visibility;
     const customContestProblems = problems.map((problem) =>
-      this.toProblemEntity(problem)
+      this.toProblemEntity(problem),
     );
     return new CustomContest({
       ...customContest,
@@ -233,7 +233,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
   }
 
   private fromEntity(
-    customContest: CustomContest
+    customContest: CustomContest,
   ): Prisma.CustomContestCreateInput {
     const problems: Prisma.CustomContestProblemCreateNestedManyWithoutCustomContestInput =
       {

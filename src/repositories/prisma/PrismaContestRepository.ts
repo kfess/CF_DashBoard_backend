@@ -38,7 +38,7 @@ export class PrismaContestRepository implements ContestRepository {
       include: { problems: true },
     });
     return contests.map((contest) =>
-      this.toEntity(contest, contest.problems.map(this.toProblemEntity))
+      this.toEntity(contest, contest.problems.map(this.toProblemEntity)),
     );
   }
 
@@ -49,7 +49,7 @@ export class PrismaContestRepository implements ContestRepository {
     });
     return this.toEntity(
       createdContest,
-      createdContest.problems.map(this.toProblemEntity)
+      createdContest.problems.map(this.toProblemEntity),
     );
   }
 
@@ -61,7 +61,7 @@ export class PrismaContestRepository implements ContestRepository {
     });
     return this.toEntity(
       updatedContest,
-      updatedContest.problems.map(this.toProblemEntity)
+      updatedContest.problems.map(this.toProblemEntity),
     );
   }
 

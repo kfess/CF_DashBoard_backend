@@ -13,7 +13,7 @@ const app = express();
 app.use(
   compression({
     level: 6,
-  })
+  }),
 );
 app.use(express.json());
 app.use(cookieParser());

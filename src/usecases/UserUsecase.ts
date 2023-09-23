@@ -4,14 +4,14 @@ export interface UserUseCase {
   findOrCreateByGithubId(
     githubId: number,
     githubUsername: string,
-    codeforcesUsername?: string
+    codeforcesUsername?: string,
   ): Promise<User>;
 
   findByGithubId(githubId: number): Promise<User | undefined>;
 
   updateCodeforcesUsername(
     githubId: number,
-    codeforcesUsername?: string
+    codeforcesUsername?: string,
   ): Promise<User>;
 
   exchangeCodeForAccessToken(code: string): Promise<string>;

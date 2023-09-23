@@ -15,7 +15,7 @@ export const getClassification = (contestName: string): Classification => {
   ];
 
   const foundClassification = classifications.find((classification) =>
-    contestName.includes(classification)
+    contestName.includes(classification),
   );
   return foundClassification || "Others";
 };

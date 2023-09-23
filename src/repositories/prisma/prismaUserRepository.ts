@@ -39,7 +39,7 @@ export class PrismaUserRepository implements UserRepository {
     return new User(
       user.githubId,
       user.githubUsername,
-      user.codeforcesUsername ?? undefined
+      user.codeforcesUsername ?? undefined,
     );
   }
 
