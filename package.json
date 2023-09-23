@@ -2,7 +2,16 @@
   "name": "cf-dashboard-backend",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://github.com/kfess/Codeforces_Problems_backend",
+  "description": "Codeforces Problems Dashboard Backend",
+  "author":"kfess",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kfess/Codeforces_Problems_backend"
+  },
+  "bugs": {
+    "url": "https://github.com/kfess/Codeforces_Problems_backend/issues"
+  },
   "scripts": {
     "build": "tsc",
     "db-update": "tsc && ts-node dist/daily_update.js",
