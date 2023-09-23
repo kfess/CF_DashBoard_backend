@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import { Request, Response } from "express";
-import { GetCustomContestUsecase } from "../usecases/GetCustomContestUsecase";
-import { CustomContest } from "../entities/CustomContest";
-import { Problem } from "../entities/Problem";
-import { UserPayload } from "./userController";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import { Request, Response } from 'express';
+import { GetCustomContestUsecase } from '../usecases/GetCustomContestUsecase';
+import { CustomContest } from '../entities/CustomContest';
+import { Problem } from '../entities/Problem';
+import { UserPayload } from './userController';
 
 dayjs.extend(utc);
 
@@ -18,7 +18,9 @@ export class CustomContestController {
         await this.getCustomContestUsecase.findByContestId(contestId);
       res.status(200).json(contest);
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -29,7 +31,9 @@ export class CustomContestController {
         await this.getCustomContestUsecase.findAll(githubUsername);
       res.status(200).json(customContests);
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -40,7 +44,9 @@ export class CustomContestController {
         await this.getCustomContestUsecase.findMyContests(githubUsername);
       res.status(200).json(customContests);
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -84,7 +90,9 @@ export class CustomContestController {
       res.status(201).json(createdCustomContest);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -93,7 +101,9 @@ export class CustomContestController {
       const { githubUsername } = req.user as UserPayload;
 
       if (githubUsername !== req.body.ownerId) {
-        res.status(403).json({ message: "forbidden" });
+        res.status(403).json({
+          message: 'forbidden',
+        });
         return;
       }
 
@@ -102,7 +112,9 @@ export class CustomContestController {
         await this.getCustomContestUsecase.update(customContest);
       res.json(updatedContest);
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -116,7 +128,9 @@ export class CustomContestController {
       res.status(204).send();
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -125,7 +139,9 @@ export class CustomContestController {
       const { githubUsername } = req.user as UserPayload;
 
       if (githubUsername !== req.body.ownerId) {
-        res.status(403).json({ message: "forbidden" });
+        res.status(403).json({
+          message: 'forbidden',
+        });
         return;
       }
 
@@ -136,7 +152,9 @@ export class CustomContestController {
       );
       res.status(204).send();
     } catch (error) {
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 }

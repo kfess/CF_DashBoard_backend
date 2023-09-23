@@ -1,11 +1,11 @@
-version: "3.8"
+version: '3.8'
 
 services:
   db:
     image: postgres:latest
     container_name: postgres_db
     ports:
-      - "5435:5432"
+      - '5435:5432'
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: password

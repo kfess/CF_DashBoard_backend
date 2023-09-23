@@ -3,7 +3,7 @@ import {
   PrismaClient,
   Contest as PrismaContest,
   Problem as PrismaProblem,
-} from "@prisma/client";
+} from '@prisma/client';
 import {
   ProblemType,
   Tag,
@@ -11,10 +11,10 @@ import {
   ContestType,
   Phase,
   Kind,
-} from "@/entities/sharedTypes";
-import { Problem } from "../../entities/Problem";
-import { Contest } from "../../entities/Contest";
-import { ContestRepository } from "../../repositories/ContestRepository";
+} from '@/entities/sharedTypes';
+import { Problem } from '../../entities/Problem';
+import { Contest } from '../../entities/Contest';
+import { ContestRepository } from '../../repositories/ContestRepository';
 
 export class PrismaContestRepository implements ContestRepository {
   private prisma: PrismaClient;
@@ -25,8 +25,12 @@ export class PrismaContestRepository implements ContestRepository {
 
   async findById(id: number): Promise<Contest | null> {
     const contest = await this.prisma.contest.findUnique({
-      where: { id: id },
-      include: { problems: true },
+      where: {
+        id: id,
+      },
+      include: {
+        problems: true,
+      },
     });
     return contest
       ? this.toEntity(contest, contest.problems.map(this.toProblemEntity))
@@ -35,43 +39,60 @@ export class PrismaContestRepository implements ContestRepository {
 
   async findAll(): Promise<Contest[]> {
     const contests = await this.prisma.contest.findMany({
-      include: { problems: true },
+      include: {
+        problems: true,
+      },
     });
     return contests.map((contest) =>
-      this.toEntity(contest, contest.problems.map(this.toProblemEntity)),
+      this.toEntity(contest, contest.problems.map(this.toProblemEntity))
     );
   }
 
   async create(contest: Contest): Promise<Contest> {
     const createdContest = await this.prisma.contest.create({
       data: this.fromEntity(contest),
-      include: { problems: true },
+      include: {
+        problems: true,
+      },
     });
     return this.toEntity(
       createdContest,
-      createdContest.problems.map(this.toProblemEntity),
+      createdContest.problems.map(this.toProblemEntity)
     );
   }
 
   async update(contest: Contest): Promise<Contest> {
     const updatedContest = await this.prisma.contest.update({
-      where: { id: contest.id },
-      data: { ...this.fromEntity(contest), problems: undefined },
-      include: { problems: true },
+      where: {
+        id: contest.id,
+      },
+      data: {
+        ...this.fromEntity(contest),
+        problems: undefined,
+      },
+      include: {
+        problems: true,
+      },
     });
     return this.toEntity(
       updatedContest,
-      updatedContest.problems.map(this.toProblemEntity),
+      updatedContest.problems.map(this.toProblemEntity)
     );
   }
 
   async updateProblem(contestId: number, problem: Problem): Promise<Problem> {
     const updatedProblem = await this.prisma.problem.upsert({
       where: {
-        contestId_index: { contestId: contestId, index: problem.index },
+        contestId_index: {
+          contestId: contestId,
+          index: problem.index,
+        },
       },
       update: problem,
-      create: { ...problem, contestId: contestId },
+      create: {
+        ...problem,
+        contestId: contestId,
+      },
     });
 
     return this.toProblemEntity(updatedProblem);

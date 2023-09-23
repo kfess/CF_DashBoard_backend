@@ -1,7 +1,7 @@
-import { Prisma, PrismaClient, Problem as PrismaProblem } from "@prisma/client";
-import { ProblemType, Tag, Classification } from "../../entities/sharedTypes";
-import { Problem } from "../../entities/Problem";
-import { ProblemRepository } from "../../repositories/ProblemRepository";
+import { Prisma, PrismaClient, Problem as PrismaProblem } from '@prisma/client';
+import { ProblemType, Tag, Classification } from '../../entities/sharedTypes';
+import { Problem } from '../../entities/Problem';
+import { ProblemRepository } from '../../repositories/ProblemRepository';
 
 export class PrismaProblemRepository implements ProblemRepository {
   private prisma: PrismaClient;
@@ -12,7 +12,12 @@ export class PrismaProblemRepository implements ProblemRepository {
 
   async findById(contestId: number, index: string): Promise<Problem | null> {
     const problem = await this.prisma.problem.findUnique({
-      where: { contestId_index: { contestId: contestId, index: index } },
+      where: {
+        contestId_index: {
+          contestId: contestId,
+          index: index,
+        },
+      },
     });
 
     return problem ? this.toEntity(problem) : null;
@@ -33,7 +38,10 @@ export class PrismaProblemRepository implements ProblemRepository {
   async update(problem: Problem): Promise<Problem> {
     const updatedProblem = await this.prisma.problem.update({
       where: {
-        contestId_index: { contestId: problem.contestId, index: problem.index },
+        contestId_index: {
+          contestId: problem.contestId,
+          index: problem.index,
+        },
       },
       data: this.fromEntity(problem, true),
     });
@@ -63,7 +71,7 @@ export class PrismaProblemRepository implements ProblemRepository {
 
   private fromEntity(
     problem: Problem,
-    isUpdate: boolean,
+    isUpdate: boolean
   ): Prisma.ProblemCreateInput {
     const problemData: Prisma.ProblemCreateInput = {
       index: problem.index,

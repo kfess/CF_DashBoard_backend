@@ -1,4 +1,4 @@
-import { CustomContest } from "../entities/CustomContest";
+import { CustomContest } from '../entities/CustomContest';
 
 export interface CustomContestRepository {
   findByContestId(contestId: string): Promise<CustomContest | null>;

@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { PrismaSingleton } from "../repositories/prisma/prismaSingleton";
-import { PrismaProblemRepository } from "../repositories/prisma/PrismaProblemRepository";
-import { GetProblemsInteractor } from "../usecases/GetProblemsInteractor";
-import { ProblemController } from "../controllers/problemController";
+import { Router } from 'express';
+import { PrismaSingleton } from '../repositories/prisma/prismaSingleton';
+import { PrismaProblemRepository } from '../repositories/prisma/PrismaProblemRepository';
+import { GetProblemsInteractor } from '../usecases/GetProblemsInteractor';
+import { ProblemController } from '../controllers/problemController';
 
 const router = Router();
 
@@ -11,6 +11,6 @@ const problemRepository = new PrismaProblemRepository(prisma);
 const getProblemsUsecase = new GetProblemsInteractor(problemRepository);
 const problemController = new ProblemController(getProblemsUsecase);
 
-router.get("/", (req, res) => problemController.getAllProblems(req, res));
+router.get('/', (req, res) => problemController.getAllProblems(req, res));
 
 export default router;

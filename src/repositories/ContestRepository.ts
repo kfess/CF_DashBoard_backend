@@ -1,5 +1,5 @@
-import { Contest } from "../entities/Contest";
-import { Problem } from "../entities/Problem";
+import { Contest } from '../entities/Contest';
+import { Problem } from '../entities/Problem';
 
 export interface ContestRepository {
   findById(id: number): Promise<Contest | null>;

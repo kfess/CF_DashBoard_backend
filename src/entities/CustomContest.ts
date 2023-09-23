@@ -1,5 +1,5 @@
-import { Mode, Visibility } from "./sharedTypes";
-import { Problem } from "./Problem";
+import { Mode, Visibility } from './sharedTypes';
+import { Problem } from './Problem';
 
 export class CustomContest {
   public contestId: string | undefined; // UUID

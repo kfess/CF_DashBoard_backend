@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { UserUseCase } from "../usecases/UserUsecase";
-import { verifyJWT } from "../utils/verifyJWT";
+import { Request, Response } from 'express';
+import { UserUseCase } from '../usecases/UserUsecase';
+import { verifyJWT } from '../utils/verifyJWT';
 
 export interface UserPayload {
   githubId: number;
@@ -19,17 +19,17 @@ export class UserController {
       const githubUser = await this.userUseCase.getGithubUser(accessToken);
       await this.userUseCase.findOrCreateByGithubId(
         githubUser.id,
-        githubUser.login,
+        githubUser.login
       );
       const jwtToken = this.userUseCase.createJWT(
         githubUser.id,
-        githubUser.login,
+        githubUser.login
       );
 
-      res.cookie("authToken", jwtToken, {
+      res.cookie('authToken', jwtToken, {
         httpOnly: true,
         // secure: true, // for https
-        sameSite: "strict",
+        sameSite: 'strict',
         maxAge: 1000 * 60 * 60 * 24 * 30,
       });
       res.status(200).json({
@@ -38,7 +38,9 @@ export class UserController {
         isLoggedIn: true,
       });
     } catch (error) {
-      res.status(400).json({ message: "failed" });
+      res.status(400).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -50,11 +52,16 @@ export class UserController {
     try {
       const user = await this.userUseCase.updateCodeforcesUsername(
         githubId,
-        codeforcesUsername,
+        codeforcesUsername
       );
-      res.status(200).json({ ...user, isLoggedIn: true });
+      res.status(200).json({
+        ...user,
+        isLoggedIn: true,
+      });
     } catch (error) {
-      res.status(400).json({ message: "failed" });
+      res.status(400).json({
+        message: 'failed',
+      });
     }
   }
 
@@ -63,19 +70,28 @@ export class UserController {
 
     try {
       const user = await this.userUseCase.findByGithubId(githubId);
-      res.status(200).json({ ...user, isLoggedIn: true });
+      res.status(200).json({
+        ...user,
+        isLoggedIn: true,
+      });
     } catch (error) {
-      res.status(400).json({ message: "failed" });
+      res.status(400).json({
+        message: 'failed',
+      });
     }
   }
 
   async verifyJWT(req: Request, res: Response): Promise<void> {
-    const token = req.cookies.authToken || req.headers["authorization"];
+    const token = req.cookies.authToken || req.headers['authorization'];
 
     if (token && verifyJWT(token)) {
-      res.status(200).json({ message: "valid token" });
+      res.status(200).json({
+        message: 'valid token',
+      });
     } else {
-      res.status(401).json({ message: "invalid token" });
+      res.status(401).json({
+        message: 'invalid token',
+      });
     }
   }
 }

@@ -1,19 +1,19 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   ProblemApiResponseSchema,
   OfficialProblem,
   OfficialStatisticsProblem,
-} from "../validators/codeforcesProblemSchema";
+} from '../validators/codeforcesProblemSchema';
 import {
   ContestApiResponseSchema,
   OfficialContest,
-} from "../validators/codeforcesContestSchema";
-import { CF_CONTESTS_URL, CF_PROBLEMS_URL } from "../utils/constant";
-import { Contest } from "../entities/Contest";
-import { Problem } from "../entities/Problem";
-import { ContestRepository } from "../repositories/ContestRepository";
-import { FetchContestUsecase } from "../usecases/FetchContestsUsecase";
-import { getClassification } from "../utils/getClassification";
+} from '../validators/codeforcesContestSchema';
+import { CF_CONTESTS_URL, CF_PROBLEMS_URL } from '../utils/constant';
+import { Contest } from '../entities/Contest';
+import { Problem } from '../entities/Problem';
+import { ContestRepository } from '../repositories/ContestRepository';
+import { FetchContestUsecase } from '../usecases/FetchContestsUsecase';
+import { getClassification } from '../utils/getClassification';
 
 export class FetchContestsInteractor implements FetchContestUsecase {
   private contestRepository: ContestRepository;
@@ -129,8 +129,8 @@ export class FetchContestsInteractor implements FetchContestUsecase {
       const solvedCount = statisticsMap.get(
         `${problem.contestId}-${problem.index}`
       );
-      const contestName = contestMap.get(problem.contestId) ?? "";
-      const classification = getClassification(contestName ?? "");
+      const contestName = contestMap.get(problem.contestId) ?? '';
+      const classification = getClassification(contestName ?? '');
       return new Problem({
         ...problem,
         solvedCount: solvedCount,

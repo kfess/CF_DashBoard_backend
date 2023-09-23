@@ -1,4 +1,4 @@
-import { Problem } from "../entities/Problem";
+import { Problem } from '../entities/Problem';
 
 export interface ProblemRepository {
   findById(contestId: number, index: string): Promise<Problem | null>;

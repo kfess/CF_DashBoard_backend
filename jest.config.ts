@@ -1,24 +1,24 @@
-import type { Config } from "@jest/types";
+import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  roots: ["<rootDir>/src"],
+  roots: ['<rootDir>/src'],
   testMatch: [
-    "**/__tests__/**/*.+(ts|tsx|js)",
-    "**/?(*.)+(spec|test).+(ts|tsx|js)",
+    '**/__tests__/**/*.+(ts|tsx|js)',
+    '**/?(*.)+(spec|test).+(ts|tsx|js)',
   ],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testEnvironment: "node",
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testEnvironment: 'node',
   collectCoverage: true,
-  coverageReporters: ["text", "lcov"],
-  coverageDirectory: "coverage",
+  coverageReporters: ['text', 'lcov'],
+  coverageDirectory: 'coverage',
   collectCoverageFrom: [
-    "src/**/*.{ts,tsx,js,jsx}",
-    "!src/**/index.{ts,js}",
-    "!src/**/*.(spec|test).{ts,tsx,js,jsx}",
-    "!src/**/*mock.{ts,tsx,js,jsx}",
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/index.{ts,js}',
+    '!src/**/*.(spec|test).{ts,tsx,js,jsx}',
+    '!src/**/*mock.{ts,tsx,js,jsx}',
   ],
   coverageThreshold: {
     global: {

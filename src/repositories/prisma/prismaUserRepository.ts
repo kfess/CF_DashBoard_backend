@@ -1,6 +1,6 @@
-import { Prisma, PrismaClient, User as PrismaUser } from "@prisma/client";
-import { UserRepository } from "../UserRepository";
-import { User } from "../../entities/User";
+import { Prisma, PrismaClient, User as PrismaUser } from '@prisma/client';
+import { UserRepository } from '../UserRepository';
+import { User } from '../../entities/User';
 
 export class PrismaUserRepository implements UserRepository {
   private prisma: PrismaClient;
@@ -11,7 +11,9 @@ export class PrismaUserRepository implements UserRepository {
 
   async findByGithubId(githubId: number): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
-      where: { githubId: githubId },
+      where: {
+        githubId: githubId,
+      },
     });
     return user ? this.toEntity(user) : null;
   }
@@ -25,21 +27,27 @@ export class PrismaUserRepository implements UserRepository {
 
   async update(user: User): Promise<User> {
     const updatedUser = await this.prisma.user.update({
-      where: { githubId: user.githubId },
+      where: {
+        githubId: user.githubId,
+      },
       data: this.fromEntity(user),
     });
     return this.toEntity(updatedUser);
   }
 
   async delete(githubId: number): Promise<void> {
-    await this.prisma.user.delete({ where: { githubId: githubId } });
+    await this.prisma.user.delete({
+      where: {
+        githubId: githubId,
+      },
+    });
   }
 
   private toEntity(user: PrismaUser): User {
     return new User(
       user.githubId,
       user.githubUsername,
-      user.codeforcesUsername ?? undefined,
+      user.codeforcesUsername ?? undefined
     );
   }
 

@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { GetProblemsUsecase } from "../usecases/GetProblemsUsecase";
+import { Request, Response } from 'express';
+import { GetProblemsUsecase } from '../usecases/GetProblemsUsecase';
 
 export class ProblemController {
   constructor(private getProblemsUsecase: GetProblemsUsecase) {}
@@ -10,7 +10,9 @@ export class ProblemController {
       res.status(200).json(problems);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "failed" });
+      res.status(500).json({
+        message: 'failed',
+      });
     }
   }
 }

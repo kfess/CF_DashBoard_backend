@@ -1,5 +1,5 @@
-import { Classification, Kind, Phase, ContestType } from "./sharedTypes";
-import { Problem } from "./Problem";
+import { Classification, Kind, Phase, ContestType } from './sharedTypes';
+import { Problem } from './Problem';
 
 export class Contest {
   readonly id: number;

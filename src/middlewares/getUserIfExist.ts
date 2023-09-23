@@ -1,13 +1,13 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { verifyJWT } from "../utils/verifyJWT";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { verifyJWT } from '../utils/verifyJWT';
 
 export const getUserIfExist = (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
-  const token = req.cookies.authToken || req.headers["authorization"];
+  const token = req.cookies.authToken || req.headers['authorization'];
   if (!token) {
     req.user = undefined;
     next();

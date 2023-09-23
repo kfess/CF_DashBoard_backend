@@ -1,4 +1,4 @@
-import { User } from "../entities/User";
+import { User } from '../entities/User';
 
 export interface UserRepository {
   findByGithubId(githubId: number): Promise<User | null>;

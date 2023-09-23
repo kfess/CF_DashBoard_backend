@@ -1,6 +1,6 @@
-import { CustomContest } from "../entities/CustomContest";
-import { CustomContestRepository } from "../repositories/CustomContestRepository";
-import { GetCustomContestUsecase } from "../usecases/GetCustomContestUsecase";
+import { CustomContest } from '../entities/CustomContest';
+import { CustomContestRepository } from '../repositories/CustomContestRepository';
+import { GetCustomContestUsecase } from '../usecases/GetCustomContestUsecase';
 
 export class GetCustomContestInteractor implements GetCustomContestUsecase {
   private readonly customContestRepository: CustomContestRepository;
@@ -25,7 +25,10 @@ export class GetCustomContestInteractor implements GetCustomContestUsecase {
       await this.customContestRepository.findCreatedContests(ownerId);
     const participatedContests =
       await this.customContestRepository.findParticipatedContests(ownerId);
-    return { createdContests, participatedContests };
+    return {
+      createdContests,
+      participatedContests,
+    };
   }
 
   async create(customContest: CustomContest): Promise<CustomContest> {
@@ -38,21 +41,21 @@ export class GetCustomContestInteractor implements GetCustomContestUsecase {
 
   async addUserToContest(
     participant: string,
-    contestId: string,
+    contestId: string
   ): Promise<void> {
     return this.customContestRepository.addUserToContest(
       participant,
-      contestId,
+      contestId
     );
   }
 
   async removeUserFromContest(
     participant: string,
-    contestId: string,
+    contestId: string
   ): Promise<void> {
     return this.customContestRepository.removeUserFromContest(
       participant,
-      contestId,
+      contestId
     );
   }
 }

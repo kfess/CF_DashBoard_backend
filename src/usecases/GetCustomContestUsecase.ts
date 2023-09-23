@@ -1,4 +1,4 @@
-import { CustomContest } from "../entities/CustomContest";
+import { CustomContest } from '../entities/CustomContest';
 
 export interface GetCustomContestUsecase {
   findByContestId(contestId: string): Promise<CustomContest | null>;

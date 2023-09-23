@@ -1,4 +1,4 @@
-import { Contest } from "../entities/Contest";
+import { Contest } from '../entities/Contest';
 
 export interface GetContestsUsecase {
   /**

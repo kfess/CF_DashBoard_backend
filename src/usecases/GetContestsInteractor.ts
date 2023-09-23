@@ -1,6 +1,6 @@
-import { Contest } from "../entities/Contest";
-import { ContestRepository } from "../repositories/ContestRepository";
-import { GetContestsUsecase } from "../usecases/GetContestsUsecase";
+import { Contest } from '../entities/Contest';
+import { ContestRepository } from '../repositories/ContestRepository';
+import { GetContestsUsecase } from '../usecases/GetContestsUsecase';
 
 export class GetContestsInteractor implements GetContestsUsecase {
   private contestRepository;

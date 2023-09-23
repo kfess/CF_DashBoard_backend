@@ -1,4 +1,4 @@
-import { Label } from "../entities/Label";
+import { Label } from '../entities/Label';
 
 export interface ProblemLabelRepository {
   findByUserId(userId: string): Promise<Label[]>;
@@ -9,11 +9,11 @@ export interface ProblemLabelRepository {
   addProblemToLabel(
     problemId: number,
     labelId: number,
-    userId: string,
+    userId: string
   ): Promise<void>;
   removeProblemFromLabel(
     problemId: number,
     labelId: number,
-    userId: string,
+    userId: string
   ): Promise<void>;
 }

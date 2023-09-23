@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 export class PrismaSingleton {
   private static prismaInstance: PrismaClient | null;
