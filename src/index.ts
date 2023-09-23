@@ -20,16 +20,18 @@ app.use(cookieParser());
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 app.use(router);
 
+// test
+app.get("/test", function (req, res) {
+  res.send("Hello from Contests!");
+});
+
 // Execute the main function if this file is run directly
 if (require.main === module) {
   const port = process.env.PORT || 4000;
   app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
-} else {
-  // Export the handler for Lambda function
-  const handler = serverlessExpress({ app });
-  exports.handler = async (event: any, contest: any) => {
-    return await handler(event, contest);
-  };
 }
+
+// Export the handler for Lambda function
+export const handler = serverlessExpress({ app });
