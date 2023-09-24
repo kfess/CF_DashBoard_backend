@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "Codeforces Problems Dashboard Backend",
-  "author":"kfess",
+  "author": "kfess",
   "license": "MIT",
   "repository": {
     "type": "git",

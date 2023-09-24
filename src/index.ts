@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
+
 import { checkEnvVars } from './utils/checkEnvVars';
 import serverlessExpress from '@vendia/serverless-express';
 import compression from 'compression';
