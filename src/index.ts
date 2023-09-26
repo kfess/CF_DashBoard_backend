@@ -6,6 +6,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import router from './routes';
+import helmet from 'helmet';
 
 dotenv.config({ path: '.env' });
 checkEnvVars();
@@ -17,6 +18,7 @@ app.use(
     level: 6,
   })
 );
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
