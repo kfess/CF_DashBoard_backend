@@ -14,9 +14,9 @@ describe('HealthController', () => {
 
   describe('getHealth', () => {
     it('should return name and version', async () => {
-      expect(await healthController.getHealth()).toBe(
-        `${name} v${version} available`,
-      );
+      expect(await healthController.getHealth()).toEqual({
+        message: `${name} v${version} available`,
+      });
     });
   });
 });

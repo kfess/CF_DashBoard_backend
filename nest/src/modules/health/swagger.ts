@@ -1,4 +1,4 @@
-import { Swagger } from 'utils/swagger';
+import { Swagger } from '../../utils/swagger';
 
 export const SwaggerResponse = {
   get: {
