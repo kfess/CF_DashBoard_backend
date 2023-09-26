@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
 export const checkEnvVars = (): void => {
   if (!process.env.GITHUB_CLIENT_ID) {
     throw new Error('GITHUB_CLIENT_ID is not defined');

@@ -29,13 +29,15 @@ router.get('/:contestId', (req, res) =>
   customContestController.findByContestId(req, res)
 );
 
-router.post('/', (req, res) => customContestController.create(req, res));
+router.post('/', authenticate, (req, res) =>
+  customContestController.create(req, res)
+);
 
 router.put('/', authenticate, (req, res) =>
   customContestController.update(req, res)
 );
 
-router.post('/add-user', (req, res) =>
+router.post('/add-user', authenticate, (req, res) =>
   customContestController.addUserToContest(req, res)
 );
 

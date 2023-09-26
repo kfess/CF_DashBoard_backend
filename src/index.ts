@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import { checkEnvVars } from './utils/checkEnvVars';
 import serverlessExpress from '@vendia/serverless-express';
 import compression from 'compression';
@@ -8,7 +7,6 @@ import cors from 'cors';
 import router from './routes';
 import helmet from 'helmet';
 
-dotenv.config({ path: '.env' });
 checkEnvVars();
 
 const app = express();
