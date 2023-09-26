@@ -5,6 +5,7 @@ import { GetCustomContestUsecase } from '../usecases/GetCustomContestUsecase';
 import { CustomContest } from '../entities/CustomContest';
 import { Problem } from '../entities/Problem';
 import { UserPayload } from './userController';
+import { createCustomContestSchema } from '../validators/customContestSchema';
 
 dayjs.extend(utc);
 
@@ -52,6 +53,16 @@ export class CustomContestController {
 
   async create(req: Request, res: Response): Promise<void> {
     try {
+      // zod validation
+      const parsedBody = createCustomContestSchema.safeParse(req.body);
+      if (!parsedBody.success) {
+        res.status(400).json({
+          message: 'Validation failed',
+          errors: parsedBody.error.formErrors.fieldErrors, // エラーメッセージの詳細
+        });
+        return;
+      }
+
       const {
         title,
         description,
@@ -63,6 +74,7 @@ export class CustomContestController {
         penalty,
         mode,
         visibility,
+        relatedTopics,
         participants,
       } = req.body;
 
@@ -81,6 +93,7 @@ export class CustomContestController {
         penalty,
         mode,
         visibility,
+        relatedTopics,
         participants,
       });
 
@@ -103,6 +116,16 @@ export class CustomContestController {
       if (githubUsername !== req.body.ownerId) {
         res.status(403).json({
           message: 'forbidden',
+        });
+        return;
+      }
+
+      // zod validation
+      const parsedBody = createCustomContestSchema.safeParse(req.body);
+      if (!parsedBody.success) {
+        res.status(400).json({
+          message: 'Validation failed',
+          errors: parsedBody.error.formErrors.fieldErrors, // エラーメッセージの詳細
         });
         return;
       }

@@ -50,6 +50,7 @@ model CustomContest {
   penalty               Int
   mode                  String
   visibility            String
+  relatedTopics         String[]
   participants          String[]
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt

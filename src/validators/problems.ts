@@ -1,7 +1,33 @@
-// This schema is offical from Codeforces API
 import { z } from 'zod';
 
-export const TagSchema = z.union([
+// this is the same as "@features/contests/contest"
+// Importing classificationSchema from "@features/contests/contest"
+// did not work for me. So I redefined the same classificationSchema
+// I want to fix anyway.
+export const classificationSchema = z.union([
+  z.literal('All'),
+  z.literal('Div. 1'),
+  z.literal('Div. 2'),
+  z.literal('Div. 1 + Div. 2'),
+  z.literal('Div. 3'),
+  z.literal('Div. 4'),
+  z.literal('ICPC'),
+  z.literal('Kotlin Heroes'),
+  z.literal('Global'),
+  z.literal('Educational'),
+  z.literal('Others'),
+]);
+
+// https://codeforces.com/apiHelp/objects#Problem
+
+export const typeSchema = z.union([
+  z.literal('PROGRAMMING'),
+  z.literal('QUESTION'),
+]);
+export const problemType = ['PROGRAMMING', 'QUESTION'] as const;
+export type ProblemType = (typeof problemType)[number];
+
+export const tagSchema = z.union([
   z.literal('implementation'),
   z.literal('math'),
   z.literal('greedy'),
@@ -39,7 +65,6 @@ export const TagSchema = z.union([
   z.literal('schedules'),
   z.literal('no tags'),
 ]);
-
 export const tags = [
   'implementation',
   'math',
@@ -80,38 +105,29 @@ export const tags = [
 ] as const;
 export type Tag = (typeof tags)[number];
 
-const OfficialProblemSchema = z.object({
-  contestId: z.number(),
+export const problemSchema = z.object({
+  contestId: z.number().optional(),
   problemsetName: z.string().optional(),
   index: z.string(),
   name: z.string(),
-  type: z.union([z.literal('PROGRAMMING'), z.literal('QUESTION')]),
+  type: typeSchema,
   points: z.number().optional(),
   rating: z.number().optional(),
   tags: z
-    .array(TagSchema)
+    .array(tagSchema)
     .or(z.array(z.string())) // "tags" is sometimes empty array [], how can this situation be handled more elegantly?
-    .transform((val) =>
-      val.length > 0 ? (val as Tag[]) : (['no tags'] as const)
+    .transform((tags) =>
+      tags.length > 0 ? (tags as Tag[]) : (['no tags'] as Tag[])
     ),
+  contestName: z.string().optional(), // need to remove optional in the future
+  classification: z.optional(classificationSchema), // need to remove optional in the future
+  solvedCount: z.number().optional(),
 });
+export const problemsSchema = z.array(problemSchema);
+export type Problem = z.infer<typeof problemSchema>;
 
-export type OfficialProblem = z.infer<typeof OfficialProblemSchema>;
-
-const OfficialProblemStatisticsSchema = z.object({
-  contestId: z.number(),
+export const reshapedProblemSchema = z.object({
   index: z.string(),
-  solvedCount: z.number(),
+  indexedProblems: z.array(problemSchema),
 });
-
-export type OfficialStatisticsProblem = z.infer<
-  typeof OfficialProblemStatisticsSchema
->;
-
-export const ProblemApiResponseSchema = z.object({
-  status: z.literal('OK'),
-  result: z.object({
-    problems: z.array(OfficialProblemSchema),
-    problemStatistics: z.array(OfficialProblemStatisticsSchema),
-  }),
-});
+export type ReshapedProblem = z.infer<typeof reshapedProblemSchema>;

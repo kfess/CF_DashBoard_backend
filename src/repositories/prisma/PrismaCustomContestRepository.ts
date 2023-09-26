@@ -6,7 +6,7 @@ import {
 } from '@prisma/client';
 import { CustomContestRepository } from '../CustomContestRepository';
 import { CustomContest } from '../../entities/CustomContest';
-import { Mode, Visibility } from '../../entities/sharedTypes';
+import { Mode, Visibility, RelatedTopics } from '../../entities/sharedTypes';
 import { ProblemType, Tag, Classification } from '../../entities/sharedTypes';
 import { Problem } from '../../entities/Problem';
 
@@ -301,6 +301,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
   ): CustomContest {
     const mode = customContest.mode as Mode;
     const visibility = customContest.visibility as Visibility;
+    const relatedTopics = customContest.relatedTopics as RelatedTopics[];
     const customContestProblems = problems.map((problem) =>
       this.toProblemEntity(problem)
     );
@@ -308,6 +309,7 @@ export class PrismaCustomContestRepository implements CustomContestRepository {
       ...customContest,
       mode,
       visibility,
+      relatedTopics,
       problems: customContestProblems,
     });
   }

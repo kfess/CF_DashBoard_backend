@@ -1,4 +1,4 @@
-import { Mode, Visibility } from './sharedTypes';
+import { Mode, RelatedTopics, Visibility } from './sharedTypes';
 import { Problem } from './Problem';
 
 export class CustomContest {
@@ -13,6 +13,7 @@ export class CustomContest {
   public penalty: number;
   public mode: Mode;
   public visibility: Visibility;
+  public relatedTopics: RelatedTopics[];
   public participants: string[];
 
   constructor({
@@ -27,6 +28,7 @@ export class CustomContest {
     penalty,
     mode,
     visibility,
+    relatedTopics,
     participants,
   }: {
     contestId?: string; // UUID
@@ -40,6 +42,7 @@ export class CustomContest {
     penalty: number;
     mode: Mode;
     visibility: Visibility;
+    relatedTopics: RelatedTopics[];
     participants: string[];
   }) {
     this.contestId = contestId;
@@ -53,6 +56,7 @@ export class CustomContest {
     this.penalty = penalty;
     this.mode = mode;
     this.visibility = visibility;
+    this.relatedTopics = relatedTopics;
     this.participants = participants;
   }
 }

@@ -1,3 +1,4 @@
+// This schema is offical from Codeforces API
 import { z } from 'zod';
 
 export const OfficialContestSchema = z.object({
