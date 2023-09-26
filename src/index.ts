@@ -11,11 +11,7 @@ checkEnvVars();
 
 const app = express();
 
-app.use(
-  compression({
-    level: 6,
-  })
-);
+app.use(compression({ level: 6 }));
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
