@@ -15,14 +15,14 @@ async function bootstrap() {
   app.use(cookieParser()); // Cookie parser
 
   const { ENV, HOST, PORT, POSTGRES_URL } = app.get(ISecretAdapter);
-  console.log(`ENV: ${ENV}`);
+
   // Setup Swagger Documentation
   const config = new DocumentBuilder()
     .setTitle(name)
     .setDescription(description)
     .addBearerAuth()
     .setVersion(version)
-    .addServer(HOST)
+    // .addServer(HOST)
     .addTag('Swagger Documentation')
     .build();
 
