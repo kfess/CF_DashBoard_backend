@@ -32,6 +32,9 @@
   },
   "lint-staged": {
     "*.{css,scss,html,json,md}": "prettier --write",
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write"
+    ],
     "package.json": [
       "prettier --write",
       "sort-package-json"
