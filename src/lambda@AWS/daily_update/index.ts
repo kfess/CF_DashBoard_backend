@@ -2,8 +2,8 @@
 // This function is supposed to be run on Lambda every a few hours
 
 import { PrismaClient } from '@prisma/client';
-import { PrismaContestRepository } from '../repositories/prisma/PrismaContestRepository';
-import { FetchContestsInteractor } from '../usecases/FetchContestsInteractor';
+import { PrismaContestRepository } from '../../repositories/prisma/PrismaContestRepository';
+import { FetchContestsInteractor } from '../../usecases/FetchContestsInteractor';
 
 // These lines are outside of the handler to take advantage of cached execution environments
 // https://docs.aws.amazon.com/lambda/latest/dg/running-lambda-code.html
