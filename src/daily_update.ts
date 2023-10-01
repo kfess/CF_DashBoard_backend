@@ -16,16 +16,6 @@ export async function main() {
   await prisma.$disconnect();
 }
 
-// Triggered by Lambda function every a few hours
-exports.handler = async (event: any, context: any) => {
-  try {
-    await main();
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-};
-
 // Execute the main function if this file is run directly
 if (require.main === module) {
   main().catch(console.error);
