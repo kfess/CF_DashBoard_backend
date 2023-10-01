@@ -10,6 +10,7 @@ https://github.com/kfess/CF_DashBoard/assets/35001425/558b08f7-ea1c-4a2a-999a-d9
 
 - [Front-end web application](https://github.com/kfess/Codeforces_Problems_frontend)
 - [Back-end web application](https://github.com/kfess/Codeforces_Problems_backend)
+- [Crawler](https://github.com/kfess/CF_DashBoard_crawler)
 
 ## Documentation
 
