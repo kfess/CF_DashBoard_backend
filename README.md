@@ -1,6 +1,6 @@
 # CF-DashBoard Backend
 
-[![CI](https://github.com/kfess/CF_DashBoard_backend/actions/workflows/ci.yaml/badge.svg)](https://github.com/kfess/CF_DashBoard_backend/actions/workflows/ci.yaml) [![GitHub Pages](https://github.com/kfess/CF_DashBoard/actions/workflows/gh-pages.yaml/badge.svg)](https://github.com/kfess/CF_DashBoard/actions/workflows/gh-pages.yaml)
+[![CI](https://github.com/kfess/CF_DashBoard_backend/actions/workflows/ci.yaml/badge.svg)](https://github.com/kfess/CF_DashBoard_backend/actions/workflows/ci.yaml) [![GitHub Pages](https://github.com/kfess/CF_DashBoard/actions/workflows/gh-pages.yaml/badge.svg)](https://github.com/kfess/CF_DashBoard/actions/workflows/gh-pages.yaml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [CF-DashBoard](https://github.com/kfess/CF_DashBoard) is a web application to help Codeforces users to solve problems and manage progress more efficiently. This repository provides the backend service for CF-DashBoard.
 
