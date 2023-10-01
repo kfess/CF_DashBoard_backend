@@ -14,8 +14,8 @@
   },
   "scripts": {
     "build:all": "npm run build && npm run build:migration",
-    "build:api": "tsc",
-    "build:migration": "tsc -p ./tsconfig.migration.json && cp -r ./src/lambda@AWS/node_modules ./dist/migration/lambda@AWS/",
+    "build:api": "tsc -p ./tsconfig.daily_update.json",
+    "build:migration": "tsc -p ./tsconfig.migration.json && cp -r ./src/lambda@AWS/migration/node_modules ./dist/migration/",
     "db-update": "tsc && ts-node dist/daily_update.js",
     "format": "npm run sort-package-json && npm run prettier ",
     "lint": "eslint . --ext .ts",
