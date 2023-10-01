@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '.env' });
+const envPath =
+  process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
+dotenv.config({ path: envPath });
 
 export const checkEnvVars = (): void => {
   if (!process.env.GITHUB_CLIENT_ID) {

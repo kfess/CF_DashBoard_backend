@@ -4,5 +4,6 @@
     "outDir": "./dist/migration",
     "rootDir": "./src/lambda@AWS/migration"
   },
-  "include": ["./src/lambda@AWS/migration/index.ts"]
+  "include": ["./src/lambda@AWS/migration/index.ts"],
+  "exclude": []
 }

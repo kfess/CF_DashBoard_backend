@@ -3,5 +3,6 @@
   "compilerOptions": {
     "outDir": "./dist/daily_update"
   },
-  "include": ["./src/lambda@AWS/daily_update/*"]
+  "include": ["./src/lambda@AWS/daily_update/index.ts"],
+  "exclude": []
 }
