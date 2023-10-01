@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "dist/express",
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {

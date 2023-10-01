@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id                 String @id @default(uuid())
+  githubId           Int @unique
+  githubUsername     String @unique
+  codeforcesUsername String?
+  labels             Label[]
+}
+
+model Contest {
+  id             Int @id @unique
+  name           String
+  type                  String
+  phase                 String
+  frozen                Boolean
+  durationSeconds       Int
+  startTimeSeconds      Int
+  kind                  String
+  classification        String
+  relativeTimeSeconds   Int?
+  icpcRegion            String?
+  country               String?
+  city                  String?
+  season                String?
+  preparedBy            String?
+  websiteUrl            String?
+  description           String?
+  difficulty            Int?
+  problems              Problem[]
+  contestLabels         ContestLabel[]
+}
+
+model CustomContest {
+  contestId             String          @id @default(uuid())
+  title                 String
+  description           String
+  owner                 String
+  ownerId               String
+  startDate             DateTime
+  endDate               DateTime
+  penalty               Int
+  mode                  String
+  visibility            String
+  relatedTopics         String[]
+  participants          String[]
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  problems              CustomContestProblem[]
+}
+
+model Problem {
+  contestId             Int
+  index                 String
+  name                  String
+  type                  String
+  tags                  String[]
+  contestName           String
+  classification        String
+  problemsetName        String?
+  points                Int?
+  rating                Int?
+  solvedCount           Int?
+  contest               Contest?        @relation(fields: [contestId], references: [id])
+  customContests        CustomContestProblem[]
+  problemLabels         ProblemLabel[]
+  @@unique([contestId, index], name: "contestId_index")
+}
+
+model CustomContestProblem {
+  id               Int            @id @default(autoincrement())
+  customContestId  String
+  problemContestId Int
+  problemIndex     String
+  customContest    CustomContest  @relation(fields: [customContestId], references: [contestId])
+  problem          Problem        @relation(fields: [problemContestId, problemIndex], references: [contestId, index])
+  @@unique([customContestId, problemContestId, problemIndex])
+}
+
+model Label {
+  id                    Int             @id
+  githubId              Int
+  name                  String
+  description           String
+  color                 String
+  createdAt             DateTime
+  updatedAt             DateTime
+  user                  User            @relation(fields: [githubId], references: [githubId])
+  problemLabels         ProblemLabel[]
+  contestLabels         ContestLabel[]
+}
+
+model ProblemLabel {
+  id                    Int             @id
+  problemContestId      Int
+  problemIndex          String
+  labelId               Int
+  problem               Problem         @relation(fields: [problemContestId, problemIndex], references: [contestId, index])
+  label                 Label           @relation(fields: [labelId], references: [id])
+}
+
+model ContestLabel {
+  id                    Int             @id
+  contestId             Int
+  labelId               Int
+  contest               Contest         @relation(fields: [contestId], references: [id])
+  label                 Label           @relation(fields: [labelId], references: [id])
+}
