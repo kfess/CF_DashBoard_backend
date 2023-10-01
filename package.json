@@ -15,8 +15,8 @@
   "scripts": {
     "build:all": "npm run build:api && npm run build:migration && npm run build:daily_update",
     "build:api": "tsc -p ./tsconfig.json",
-    "build:daily_update": "tsc -p ./tsconfig.daily_update.json",
-    "build:migration": "tsc -p ./tsconfig.migration.json && cp -r ./src/lambda@AWS/migration/node_modules ./dist/migration/ && cp -r ./src/lambda@AWS/prisma/* ./dist/migration/",
+    "build:daily_update": "tsc -p ./tsconfig.daily_update.json && cp -r ./src/lambda@AWS/prisma ./dist/daily_update/",
+    "build:migration": "tsc -p ./tsconfig.migration.json && cp -r ./src/lambda@AWS/migration/node_modules ./dist/migration/ && cp -r ./src/lambda@AWS/prisma ./dist/migration/",
     "db-update": "tsc && ts-node dist/daily_update.js",
     "format": "npm run sort-package-json && npm run prettier ",
     "lint": "eslint . --ext .ts",
