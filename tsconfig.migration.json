@@ -3,6 +3,5 @@
   "compilerOptions": {
     "outDir": "./dist/migration"
   },
-  "include": ["./src/lambda/migration.ts", "./src/prisma/*"],
-  "exclude": ["node_modules"]
+  "include": ["./src/lambda@AWS/*", "./src/lambda@AWS/node_modules/"]
 }
