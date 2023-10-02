@@ -25,7 +25,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write . --ignore-path .gitignore",
     "sort-package-json": "sort-package-json",
-    "start": "tsc && ts-node dist/index.js",
+    "start": "tsc && ts-node dist/api/index.js",
     "test": "jest --config jest.config.ts --passWithNoTests"
   },
   "husky": {
