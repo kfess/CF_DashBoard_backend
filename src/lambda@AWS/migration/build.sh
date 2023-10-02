@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # Compile
 tsc -p ./tsconfig.migration.json
 

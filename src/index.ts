@@ -1,4 +1,3 @@
-import { checkEnvVars } from './utils/checkEnvVars';
 import serverlessExpress from '@vendia/serverless-express';
 import compression from 'compression';
 import express from 'express';
@@ -6,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import router from './routes';
 import helmet from 'helmet';
+import { checkEnvVars } from './utils/checkEnvVars';
 
 checkEnvVars();
 
@@ -26,6 +26,3 @@ if (require.main === module) {
     console.log(`Listening on port ${port}`);
   });
 }
-
-// Export the handler for Lambda function
-export const handler = serverlessExpress({ app });
