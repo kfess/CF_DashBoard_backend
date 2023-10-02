@@ -9,4 +9,4 @@ tsc -p ./tsconfig.migration.json
 cp -r ./src/lambda@AWS/migration/node_modules ./dist/migration/
 
 # move prisma directory
-cp -r ./src/lambda@AWS/prisma ./dist/migration/
+cp -r ./src/prisma ./dist/migration/
