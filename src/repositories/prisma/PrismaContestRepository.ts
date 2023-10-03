@@ -98,6 +98,29 @@ export class PrismaContestRepository implements ContestRepository {
     return this.toProblemEntity(updatedProblem);
   }
 
+  async bulkUpsert(contests: Contest[]): Promise<void> {
+    const contestCreateInputs = contests.map((contest) =>
+      this.fromEntity(contest)
+    );
+    const problemCreateInputs = contests.flatMap((contest) =>
+      contest.problems.map((problem) => ({
+        ...problem,
+        contestId: contest.id,
+      }))
+    );
+
+    await this.prisma.$transaction([
+      this.prisma.contest.createMany({
+        data: contestCreateInputs,
+        skipDuplicates: true,
+      }),
+      this.prisma.problem.createMany({
+        data: problemCreateInputs,
+        skipDuplicates: true,
+      }),
+    ]);
+  }
+
   private toProblemEntity(problem: PrismaProblem): Problem {
     const type = problem.type as ProblemType;
     const tags = problem.tags as Tag[];
@@ -154,21 +177,6 @@ export class PrismaContestRepository implements ContestRepository {
   }
 
   private fromEntity(contest: Contest): Prisma.ContestCreateInput {
-    const problems: Prisma.ProblemCreateNestedManyWithoutContestInput = {
-      create: contest.problems.map((problem) => ({
-        index: problem.index,
-        name: problem.name,
-        type: problem.type,
-        tags: problem.tags,
-        contestName: problem.contestName,
-        classification: problem.classification,
-        problemsetName: problem.problemsetName,
-        points: problem.points,
-        rating: problem.rating,
-        solvedCount: problem.solvedCount,
-      })),
-    };
-
     return {
       id: contest.id,
       name: contest.name,
@@ -188,7 +196,6 @@ export class PrismaContestRepository implements ContestRepository {
       websiteUrl: contest.websiteUrl ?? null,
       description: contest.description ?? null,
       difficulty: contest.difficulty ?? null,
-      problems: problems,
     };
   }
 }

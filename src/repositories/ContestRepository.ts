@@ -7,4 +7,5 @@ export interface ContestRepository {
   create(contest: Contest): Promise<Contest>;
   update(contest: Contest): Promise<Contest>;
   updateProblem(contestId: number, problem: Problem): Promise<Problem>;
+  bulkUpsert(contests: Contest[]): Promise<void>;
 }

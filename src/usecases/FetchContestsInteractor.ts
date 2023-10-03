@@ -34,44 +34,21 @@ export class FetchContestsInteractor implements FetchContestUsecase {
 
     console.log(`Fetched ${mergedContests.length} contests from Codeforces.`);
 
-    for (const contest of mergedContests) {
-      try {
-        const existingContest = await this.contestRepository.findById(
-          contest.id
-        );
-        if (!existingContest) {
-          console.log('Creating new contest', contest);
-          await this.contestRepository.create(contest);
-        } else {
-          console.log('Updating existing contest', contest);
-          await this.contestRepository.update(contest);
-        }
-        for (const problem of contest.problems) {
-          try {
-            await this.contestRepository.updateProblem(contest.id, problem);
-          } catch (error) {
-            console.error(
-              `Failed to upsert problem with index: ${problem.index} in contest with ID: ${contest.id}. Error: ${error}`
-            );
-          }
-        }
-      } catch (error) {
-        console.error(
-          `Failed to save contest with ID: ${contest.id}. Error: ${error}`
-        );
-      }
+    try {
+      await this.contestRepository.bulkUpsert(mergedContests);
+      console.log('Successfully bulk upserted contests');
+    } catch (error) {
+      console.error(`Failed to bulk upsert contests. Error: ${error}}`);
     }
   }
 
   private async fetchContestsFromCodeforcesAPI(): Promise<OfficialContest[]> {
     try {
       const response = await axios.get(CF_CONTESTS_URL);
-      console.log('CONTEST URL:', CF_CONTESTS_URL);
-      console.log('response', response);
       const validationResult = ContestApiResponseSchema.safeParse(
         response.data
       );
-      console.log('validationResult', validationResult);
+
       if (!validationResult.success) {
         throw new Error(
           `Failed to validate contest data from Codeforces API. Error: ${validationResult.error}`
@@ -90,8 +67,6 @@ export class FetchContestsInteractor implements FetchContestUsecase {
   > {
     try {
       const response = await axios.get(CF_PROBLEMS_URL);
-      console.log('URL:', CF_PROBLEMS_URL);
-      console.log('response', response);
       if (response.status !== 200) {
         throw new Error(
           `Failed to fetch problems from Codeforces API. Status code: ${response.status}`
