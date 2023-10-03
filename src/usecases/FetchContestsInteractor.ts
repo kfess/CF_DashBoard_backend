@@ -32,14 +32,18 @@ export class FetchContestsInteractor implements FetchContestUsecase {
       officialStatisticsProblems
     );
 
+    console.log(`Fetched ${mergedContests.length} contests from Codeforces.`);
+
     for (const contest of mergedContests) {
       try {
         const existingContest = await this.contestRepository.findById(
           contest.id
         );
         if (!existingContest) {
+          console.log('Creating new contest', contest);
           await this.contestRepository.create(contest);
         } else {
+          console.log('Updating existing contest', contest);
           await this.contestRepository.update(contest);
         }
         for (const problem of contest.problems) {
@@ -62,9 +66,12 @@ export class FetchContestsInteractor implements FetchContestUsecase {
   private async fetchContestsFromCodeforcesAPI(): Promise<OfficialContest[]> {
     try {
       const response = await axios.get(CF_CONTESTS_URL);
+      console.log('CONTEST URL:', CF_CONTESTS_URL);
+      console.log('response', response);
       const validationResult = ContestApiResponseSchema.safeParse(
         response.data
       );
+      console.log('validationResult', validationResult);
       if (!validationResult.success) {
         throw new Error(
           `Failed to validate contest data from Codeforces API. Error: ${validationResult.error}`
@@ -83,6 +90,8 @@ export class FetchContestsInteractor implements FetchContestUsecase {
   > {
     try {
       const response = await axios.get(CF_PROBLEMS_URL);
+      console.log('URL:', CF_PROBLEMS_URL);
+      console.log('response', response);
       if (response.status !== 200) {
         throw new Error(
           `Failed to fetch problems from Codeforces API. Status code: ${response.status}`

@@ -3,8 +3,8 @@ import compression from 'compression';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import router from '../../routes';
 import helmet from 'helmet';
+import router from '../../routes';
 import { checkEnvVars } from '../../utils/checkEnvVars';
 
 checkEnvVars();
