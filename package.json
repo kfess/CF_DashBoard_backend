@@ -14,7 +14,7 @@
   "author": "kfess",
   "scripts": {
     "build:all": "npm run build:api && npm run build:migration && npm run build:daily_update",
-    "build:api": "webpack --config ./src/lambda@AWS/api/webpack.config.js",
+    "build:api": "bash ./src/lambda@AWS/api/build.sh",
     "build:daily_update": "bash ./src/lambda@AWS/daily_update/build.sh",
     "build:migration": "bash ./src/lambda@AWS/migration/build.sh",
     "db-update": "tsc && ts-node dist/daily_update.js",
@@ -47,6 +47,7 @@
   "dependencies": {
     "@prisma/client": "^4.12.0",
     "@vendia/serverless-express": "^4.10.1",
+    "aws-lambda": "^1.0.7",
     "axios": "^1.3.5",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -66,6 +67,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.124",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.13",

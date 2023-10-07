@@ -1,4 +1,3 @@
-import serverlessExpress from '@vendia/serverless-express';
 import compression from 'compression';
 import express from 'express';
 import cookieParser from 'cookie-parser';

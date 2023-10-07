@@ -1,11 +1,10 @@
 // webpack.config.js
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/lambda@AWS/api/index.ts',
   target: 'node',
-  externals: [nodeExternals()],
   module: {
     rules: [
       {
@@ -26,6 +25,11 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, '../../../dist/api'),
+    libraryTarget: 'commonjs2', // this is important to expose the function to AWS Lambda.
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   mode: 'production',
 };
