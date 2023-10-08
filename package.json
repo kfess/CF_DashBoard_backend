@@ -16,6 +16,7 @@
     "build:all": "npm run build:api && npm run build:migration && npm run build:daily_update",
     "build:api": "bash ./src/lambda@AWS/api/build.sh",
     "build:daily_update": "bash ./src/lambda@AWS/daily_update/build.sh",
+    "build:jwt_generator": "bash ./src/lambda@AWS/jwt_generator/build.sh",
     "build:migration": "bash ./src/lambda@AWS/migration/build.sh",
     "db-update": "ts-node ./src/daily_update",
     "dev": "ts-node ./src/index.ts",

@@ -77,7 +77,7 @@ export const handler = async (
 
 function isCodeValid(code: string | undefined) {
   const CODE_PATTERN = /^[0-9a-zA-Z]+$/;
-  // 存在チェック & 文字数チェック & 文字種チェック
+  // 存在チェック & 文字数チェック & 文字種チェック (お気持ち程度)
   if (!code || code.length >= 100 || !CODE_PATTERN.test(code)) {
     return false;
   }
