@@ -9,7 +9,7 @@ export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const code = event.queryStringParameters?.code;
+    const code = event.body ? JSON.parse(event.body).code : undefined;
 
     if (!isCodeValid(code)) {
       throw new Error('Invalid code');
@@ -58,7 +58,7 @@ export const handler = async (
     return {
       statusCode: 200,
       headers: {
-        'Set-Cookie': `authToken=${jwtToken}; HttpOnly; SameSite=Strict; Max-Age=2592000; Secure;`,
+        'Set-Cookie': `authToken=${jwtToken}; HttpOnly; SameSite=None; Max-Age=2592000; Secure;`,
       },
       body: JSON.stringify({
         githubId: githubId,
