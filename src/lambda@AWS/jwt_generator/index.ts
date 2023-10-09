@@ -60,7 +60,7 @@ export const handler = async (
     return {
       statusCode: 200,
       headers: {
-        'Set-Cookie': `authToken=${jwtToken}; HttpOnly; SameSite=None; Max-Age=${expiresIn}; Secure;`,
+        'Set-Cookie': `authToken=${jwtToken}; HttpOnly; SameSite=None; Max-Age=${expiresIn}; Secure; Path=/`,
       },
       body: JSON.stringify({
         githubId: githubId,

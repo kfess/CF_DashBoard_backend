@@ -28,6 +28,7 @@ export class UserController {
       res.cookie('authToken', jwtToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production' ? true : false,
+        path: '/',
         sameSite: 'strict',
         maxAge: expiresIn * 1000,
       });
