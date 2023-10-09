@@ -78,7 +78,7 @@ export class UserController {
   }
 
   async findOrCreateByGithubId(req: Request, res: Response): Promise<void> {
-    const { githubId, githubUsername } = req.body;
+    const { githubId, githubUsername } = req.user as UserPayload;
     try {
       const user = await this.userUseCase.findOrCreateByGithubId(
         githubId,

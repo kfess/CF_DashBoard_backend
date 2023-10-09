@@ -27,7 +27,7 @@ router.post('/exchange-no-create', (req, res) =>
 );
 
 // login with jwt token, when this function is called, new user is created if not exists
-router.post('/login', authenticate, (req, res) =>
+router.get('/login', authenticate, (req, res) =>
   userController.findOrCreateByGithubId(req, res)
 );
 
