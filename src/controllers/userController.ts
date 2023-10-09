@@ -58,17 +58,20 @@ export class UserController {
         githubUser.id,
         githubUser.login
       );
+      const expiresIn = 60 * 60 * 24 * 30; // 30 days
+      const expirationTimestamp = Math.floor(Date.now() / 1000) + expiresIn; // 現在のタイムスタンプ + 30 days
 
       res.cookie('authToken', jwtToken, {
         httpOnly: true,
         // secure: true, // for https
         sameSite: 'strict',
-        maxAge: 1000 * 60 * 60 * 24 * 30,
+        maxAge: expiresIn * 1000,
       });
       res.status(200).json({
         githubId: githubUser.id,
         githubUsername: githubUser.login,
         isLoggedIn: true,
+        expirationTimestamp: expirationTimestamp,
       });
     } catch (error) {
       res.status(400).json({
