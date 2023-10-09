@@ -18,11 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      process.env.CORS_ORIGIN_1 as string,
-      process.env.CORS_ORIGIN_2 as string,
-      'https://djkt4hplele68.cloudfront.net',
-    ],
+    origin: [process.env.PROD_CORS_ORIGIN as string],
     credentials: true,
   })
 );
