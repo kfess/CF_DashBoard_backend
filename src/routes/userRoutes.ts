@@ -12,18 +12,11 @@ const userRepository = new PrismaUserRepository(prisma);
 const userUsecase = new UserInteractor(userRepository);
 const userController = new UserController(userUsecase);
 
-// exchange code for access token, create user if not exists, and return jwt token
+// exchange code for access token and return jwt token (do not create user)
 // this endpoint is called only in the development environment
 // in production, this endpoint is never called directly
 router.post('/exchange', (req, res) =>
   userController.exchangeCodeForAccessToken(req, res)
-);
-
-// exchange code for access token and return jwt token (do not create user)
-// this endpoint is called only in the development environment
-// in production, this endpoint is never called directly
-router.post('/exchange-no-create', (req, res) =>
-  userController.exchangeCodeForAccessTokenWithoutUserCreation(req, res)
 );
 
 // login with jwt token, when this function is called, new user is created if not exists

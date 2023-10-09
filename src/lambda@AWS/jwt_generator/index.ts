@@ -45,6 +45,8 @@ export const handler = async (
 
     const githubId = userResponse.data.id as number;
     const githubUsername = userResponse.data.login as string;
+    const expiresIn = 60 * 60 * 24 * 30; // 30 days
+    const expirationTimestamp = Math.floor(Date.now() / 1000) + expiresIn; // 現在のタイムスタンプ + 30 days
 
     const jwtToken = jwt.sign(
       {
@@ -58,16 +60,16 @@ export const handler = async (
     return {
       statusCode: 200,
       headers: {
-        'Set-Cookie': `authToken=${jwtToken}; HttpOnly; SameSite=None; Max-Age=2592000; Secure;`,
+        'Set-Cookie': `authToken=${jwtToken}; HttpOnly; SameSite=None; Max-Age=${expiresIn}; Secure;`,
       },
       body: JSON.stringify({
         githubId: githubId,
         githubUsername: githubUsername,
         isLoggedIn: true,
+        expirationTimestamp: expirationTimestamp,
       }),
     };
   } catch (error) {
-    console.error('Error:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Internal server error' }),

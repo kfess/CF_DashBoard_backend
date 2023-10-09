@@ -11,44 +11,8 @@ export class UserController {
   constructor(private userUseCase: UserUseCase) {}
 
   // between backend and frontend and github api server (exchange code for access token)
-  // when this function is called, new user is created if not exists
+  // this endpoint is called only in the development environment
   async exchangeCodeForAccessToken(req: Request, res: Response): Promise<void> {
-    const { code } = req.body;
-    try {
-      const accessToken =
-        await this.userUseCase.exchangeCodeForAccessToken(code);
-      const githubUser = await this.userUseCase.getGithubUser(accessToken);
-      await this.userUseCase.findOrCreateByGithubId(
-        githubUser.id,
-        githubUser.login
-      );
-      const jwtToken = this.userUseCase.createJWT(
-        githubUser.id,
-        githubUser.login
-      );
-
-      res.cookie('authToken', jwtToken, {
-        httpOnly: true,
-        // secure: true, // for https
-        sameSite: 'strict',
-        maxAge: 1000 * 60 * 60 * 24 * 30,
-      });
-      res.status(200).json({
-        githubId: githubUser.id,
-        githubUsername: githubUser.login,
-        isLoggedIn: true,
-      });
-    } catch (error) {
-      res.status(400).json({
-        message: 'failed',
-      });
-    }
-  }
-
-  async exchangeCodeForAccessTokenWithoutUserCreation(
-    req: Request,
-    res: Response
-  ): Promise<void> {
     const { code } = req.body;
     try {
       const accessToken =
@@ -63,7 +27,7 @@ export class UserController {
 
       res.cookie('authToken', jwtToken, {
         httpOnly: true,
-        // secure: true, // for https
+        secure: process.env.NODE_ENV === 'production' ? true : false,
         sameSite: 'strict',
         maxAge: expiresIn * 1000,
       });

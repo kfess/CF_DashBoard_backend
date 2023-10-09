@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+# Set environment to production for the build
+export NODE_ENV=production
+
 # Build
 webpack --config ./src/lambda@AWS/api/webpack.config.js
 
